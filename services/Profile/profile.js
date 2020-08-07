@@ -1,6 +1,8 @@
 import User from '../../models/User';
 import APIError from '../../lib/APIError';
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+const uploader = require("./../../lib/fileHandler");
+const HttpStatus = require('http-status-codes');
 
 class CourseService {
 
@@ -8,7 +10,7 @@ class CourseService {
         try {
             let { user } = req;
             if (user === null || user === undefined) {
-                throw new APIError({ message: msg('Unautorized'), status: 401 });
+                throw new APIError({ message: msg('Unautorized'), status: HttpStatus.UNAUTHORIZED });
             }
             user = user.transform();
             if (user.profile) {
@@ -37,16 +39,35 @@ class CourseService {
             throw error;
         }
     }
+
+    async addUserProfilePicture(request, response) {
+        try {
+            let userId = request.user._id;
+            await new Promise((resolve, reject) => {
+                uploader.uploadFilesLocal("user", "profile", userId, request, response, async function (err, data) {
+                    if (err) {
+                        reject({ error: true, message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
+                    } else {
+                        resolve(data);
+                    }
+                })
+            })
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     async updateUserPassword(payload, data) {
         try {
             let { oldPassword, password } = data
             let user = await User.findById({ _id: payload._id });
             if (!user) {
-                throw new APIError({ error: true, message: 'Unauthorized', status: 401 });
+                throw new APIError({ error: true, message: 'Unauthorized', status: HttpStatus.UNAUTHORIZED });
             } else {
                 const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
                 if (!isPasswordMatch) {
-                    throw new APIError({ error: true, message: 'Invalid Credentials', status: 401 });
+                    throw new APIError({ error: true, message: 'Invalid Credentials', status: HttpStatus.UNAUTHORIZED });
                 } else {
                     let hash = bcrypt.hashSync(password);
                     await User.updateOne({ _id: payload._id }, { $set: { 'password': hash } });

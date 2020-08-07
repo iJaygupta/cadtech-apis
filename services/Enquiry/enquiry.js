@@ -3,6 +3,7 @@ import { msg } from '../../lib/messages';
 import ContactUs from '../../models/ContactUs';
 import Team from '../../models/Team';
 import Enquiry from '../../models/Enquiry';
+const HttpStatus = require('http-status-codes');
 
 class EnquiryService {
 
@@ -22,7 +23,7 @@ class EnquiryService {
         try {
             const { email, name, phone_number, query } = data;
             const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-            if (!emailRegex.test(email)) throw new APIError({ message: msg("please enter a valid email") })
+            if (!emailRegex.test(email)) throw new APIError({ message: msg("please enter a valid email"), status: HttpStatus.UNPROCESSABLE_ENTITY })
 
             let contactus = new ContactUs({
                 email,

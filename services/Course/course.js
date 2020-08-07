@@ -1,5 +1,6 @@
 import Course from '../../models/Course';
 import APIError from '../../lib/APIError';
+const HttpStatus = require('http-status-codes');
 
 
 class CourseService {
@@ -29,7 +30,7 @@ class CourseService {
         try {
             let result = await Course.findById(courseId);
             if (!result) {
-                throw new APIError({ message: 'Course does not exists', status: 422 });
+                throw new APIError({ message: 'Course does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
             return result;
         } catch (error) {
@@ -49,7 +50,7 @@ class CourseService {
                 }
             );
             if (!result) {
-                throw new APIError({ message: 'Course does not exists', status: 422 });
+                throw new APIError({ message: 'Course does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
             return result;
         } catch (error) {
@@ -61,7 +62,7 @@ class CourseService {
         try {
             let result = await Course.findByIdAndDelete(courseId);
             if (!result) {
-                throw new APIError({ message: 'Course does not exists', status: 422 });
+                throw new APIError({ message: 'Course does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
             return result;
         } catch (error) {

@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 var ContactusSchema = new mongoose.Schema({
     email: { type: String },
-    fullName: { type: String },
-    phoneNumber: { type: String },
+    name: { type: String },
+    phone_number: { type: String },
     query: { type: String }
 },
     {
@@ -14,4 +14,4 @@ var ContactusSchema = new mongoose.Schema({
 
 const ContactUs = mongoose.model('contactUs', ContactusSchema);
 
-export default  ContactUs;
+export default ContactUs;

@@ -1,5 +1,5 @@
 import security from '../lib/security';
-import EnquiryService from '../services/Enquiry/contact';
+import EnquiryService from '../services/Enquiry/enquiry';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
 const HttpStatus = require('http-status-codes');
 
@@ -11,37 +11,23 @@ class EnquiryRoute {
 
     registerRoutes() {
         this.router.post(
-            '/v1/contactUs',
+            '/v1/enquiry',
+            security.auth.bind(this),
+            this.addEnquiry.bind(this)
+        );
+        this.router.post(
+            '/v1/enquiry/contactus',
             security.auth.bind(this),
             this.contactUs.bind(this)
         );
         this.router.post(
-            '/v1/addTeamMembers',
+            '/v1/enquiry/team',
             security.auth.bind(this),
-            this.addTeamMembers.bind(this)
+            this.addTeamMember.bind(this)
         );
-        this.router.post(
-            '/v1/addenquiry',
-            security.auth.bind(this),
-            this.addEnquiry.bind(this)
-        );
+
     }
-    async contactUs(req, res, next) {
-        try {
-            const $response = await EnquiryService.contactUs(req.body);
-            sendSuccess(res, HttpStatus.OK, 2021, $response);
-        } catch (error) {
-            sendError(res, error);
-        }
-    }
-    async addTeamMembers(req, res, next) {
-        try {
-            const $response = await EnquiryService.addTeamMembers(req.body);
-            sendSuccess(res, HttpStatus.OK, 2022, $response);
-        } catch (error) {
-            sendError(res, error);
-        }
-    }
+
     async addEnquiry(req, res, next) {
         try {
             const $response = await EnquiryService.addEnquiry(req.body);
@@ -50,6 +36,25 @@ class EnquiryRoute {
             sendError(res, error);
         }
     }
+
+    async contactUs(req, res, next) {
+        try {
+            const $response = await EnquiryService.contactUs(req.body);
+            sendSuccess(res, HttpStatus.OK, 2021, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async addTeamMember(req, res, next) {
+        try {
+            const $response = await EnquiryService.addTeamMember(req.body);
+            sendSuccess(res, HttpStatus.OK, 2022, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
 }
-    
-    export default EnquiryRoute;
+
+export default EnquiryRoute;

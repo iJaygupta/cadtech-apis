@@ -37,32 +37,22 @@ class CourseService {
             throw error;
         }
     }
-    async updateUserPassword(user, data) {
+    async updateUserPassword(payload, data) {
         try {
             let { oldPassword, password } = data
-            user = await User.findById({ _id: user._id });
-            // console.log(user)
+            let user = await User.findById({ _id: payload._id });
             if (!user) {
-                throw new APIError({ message: msg("Internal Server Error"), status: 500 });
+                throw new APIError({ error: true, message: 'Unauthorized', status: 401 });
             } else {
-                let users = await bcrypt.compare(oldPassword, data.password, (error, result) => {
-                    console.log(users)
-                    if (!error) {
-                        throw new APIError({ message: 'Internal Server Error', status: 500 });
-                    } else if (!result) {
-                        throw new APIError({ message: 'Invalid Old Password', status: 500 });
-                    } else {
-                        users = user.updateOne({ _id: user._id }, { $set: { "password": hash } })
-                        if (!data) {
-                            throw new APIError({ msg: "Internal Server Error" })
-                        } else {
-                            return data
-                        }
-                    }
-                })
+                const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+                if (!isPasswordMatch) {
+                    throw new APIError({ error: true, message: 'Invalid Credentials', status: 401 });
+                } else {
+                    let hash = bcrypt.hashSync(password);
+                    await User.updateOne({ _id: payload._id }, { $set: { 'password': hash } });
+                    return user.transform();
+                }
             }
-            user = user.transform();
-            return user;
         } catch (error) {
             throw error;
         }

@@ -21,7 +21,7 @@ class CourseRoute {
             this.updateUserAccountDetails.bind(this)
         );
         this.router.put(
-            '/v1/profile/changePassword',
+            '/v1/profile/changepassword',
             security.auth.bind(this),
             this.updateUserPassword.bind(this)
         );

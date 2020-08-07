@@ -1,6 +1,6 @@
 import User from '../../models/User';
 import APIError from '../../lib/APIError';
-
+const bcrypt = require("bcryptjs")
 
 class CourseService {
 
@@ -37,6 +37,37 @@ class CourseService {
             throw error;
         }
     }
+    async updateUserPassword(user, data) {
+        try {
+            let { oldPassword, password } = data
+            user = await User.findById({ _id: user._id });
+            // console.log(user)
+            if (!user) {
+                throw new APIError({ message: msg("Internal Server Error"), status: 500 });
+            } else {
+                let users = await bcrypt.compare(oldPassword, data.password, (error, result) => {
+                    console.log(users)
+                    if (!error) {
+                        throw new APIError({ message: 'Internal Server Error', status: 500 });
+                    } else if (!result) {
+                        throw new APIError({ message: 'Invalid Old Password', status: 500 });
+                    } else {
+                        users = user.updateOne({ _id: user._id }, { $set: { "password": hash } })
+                        if (!data) {
+                            throw new APIError({ msg: "Internal Server Error" })
+                        } else {
+                            return data
+                        }
+                    }
+                })
+            }
+            user = user.transform();
+            return user;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
 }
 

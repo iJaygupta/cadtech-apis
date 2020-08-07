@@ -20,6 +20,11 @@ class CourseRoute {
             security.auth.bind(this),
             this.updateUserAccountDetails.bind(this)
         );
+        this.router.put(
+            '/v1/profile/changePassword',
+            security.auth.bind(this),
+            this.updateUserPassword.bind(this)
+        );
     }
 
     async getUserAccountDetails(req, res, next) {
@@ -35,6 +40,14 @@ class CourseRoute {
         try {
             const $response = await ProfileService.updateUserAccountDetails(req.user, req.body);
             sendSuccess(res, HttpStatus.OK, 2014, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async updateUserPassword(req, res, next) {
+        try {
+            const $response = await ProfileService.updateUserPassword(req.user, req.body);
+            sendSuccess(res, HttpStatus.OK, 2015, $response);
         } catch (error) {
             sendError(res, error);
         }

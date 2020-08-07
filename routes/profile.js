@@ -20,6 +20,11 @@ class CourseRoute {
             security.auth.bind(this),
             this.updateUserAccountDetails.bind(this)
         );
+        this.router.post(
+            '/v1/profile/picture',
+            security.auth.bind(this),
+            this.addUserProfilePicture.bind(this)
+        );
         this.router.put(
             '/v1/profile/changepassword',
             security.auth.bind(this),
@@ -44,6 +49,16 @@ class CourseRoute {
             sendError(res, error);
         }
     }
+
+    async addUserProfilePicture(req, res, next) {
+        try {
+            const $response = await ProfileService.addUserProfilePicture(req, res);
+            sendSuccess(res, HttpStatus.OK, 2015, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
     async updateUserPassword(req, res, next) {
         try {
             const $response = await ProfileService.updateUserPassword(req.user, req.body);

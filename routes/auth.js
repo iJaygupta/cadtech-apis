@@ -11,17 +11,20 @@ class AuthRoute {
     registerRoutes() {
         this.router.post(
             '/v1/auth/register',
-            security.checkUserScope.bind(this),
             this.register.bind(this)
         );
         this.router.post(
             '/v1/auth/login',
-            security.checkUserScope.bind(this),
             this.login.bind(this)
         );
         this.router.get(
+            '/v1/auth/send-email-code',
+            security.auth.bind(this),
+            this.sendEmailCode.bind(this)
+        );
+        this.router.get(
             '/v1/auth/send-phone-code',
-            security.checkUserScope.bind(this),
+            security.auth.bind(this),
             this.sendPhoneCode.bind(this)
         );
     }
@@ -44,14 +47,25 @@ class AuthRoute {
         }
     }
 
+    async sendEmailCode(req, res, next) {
+        try {
+            const $response = await AuthService.sendEmailCode(req.user);
+            sendSuccess(res, HttpStatus.OK, 2005, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
     async sendPhoneCode(req, res, next) {
         try {
-            const $response = await AuthService.sendPhoneCode(req.body);
+            const $response = await AuthService.sendPhoneCode(req.user);
             sendSuccess(res, HttpStatus.OK, 2008, $response);
         } catch (error) {
             sendError(res, error);
         }
     }
+
+
 
 }
 

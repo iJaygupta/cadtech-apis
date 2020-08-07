@@ -1,6 +1,6 @@
 import User from '../../models/User';
 import APIError from '../../lib/APIError';
-
+const bcrypt = require("bcryptjs")
 
 class CourseService {
 
@@ -37,6 +37,27 @@ class CourseService {
             throw error;
         }
     }
+    async updateUserPassword(payload, data) {
+        try {
+            let { oldPassword, password } = data
+            let user = await User.findById({ _id: payload._id });
+            if (!user) {
+                throw new APIError({ error: true, message: 'Unauthorized', status: 401 });
+            } else {
+                const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+                if (!isPasswordMatch) {
+                    throw new APIError({ error: true, message: 'Invalid Credentials', status: 401 });
+                } else {
+                    let hash = bcrypt.hashSync(password);
+                    await User.updateOne({ _id: payload._id }, { $set: { 'password': hash } });
+                    return user.transform();
+                }
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
 }
 

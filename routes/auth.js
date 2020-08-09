@@ -23,6 +23,11 @@ class AuthRoute {
             this.sendEmailCode.bind(this)
         );
         this.router.get(
+            '/v1/auth/verify-email-code',
+            security.auth.bind(this),
+            this.verifyEmailCode.bind(this)
+        );
+        this.router.get(
             '/v1/auth/send-phone-code',
             security.auth.bind(this),
             this.sendPhoneCode.bind(this)
@@ -51,6 +56,14 @@ class AuthRoute {
         try {
             const $response = await AuthService.sendEmailCode(req.user);
             sendSuccess(res, HttpStatus.OK, 2005, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async verifyEmailCode(req, res, next) {
+        try {
+            const $response = await AuthService.verifyEmailCode(req.user, req.body);
+            sendSuccess(res, HttpStatus.OK, 2000, $response);
         } catch (error) {
             sendError(res, error);
         }

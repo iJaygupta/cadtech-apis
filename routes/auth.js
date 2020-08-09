@@ -22,7 +22,7 @@ class AuthRoute {
             security.auth.bind(this),
             this.sendEmailCode.bind(this)
         );
-        this.router.get(
+        this.router.post(
             '/v1/auth/verify-email-code',
             security.auth.bind(this),
             this.verifyEmailCode.bind(this)

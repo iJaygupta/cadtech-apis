@@ -71,10 +71,29 @@ class AuthService {
                     if (!output.error) {
                         resolve(output);
                     } else {
+                        console.log(output)
                         reject({ error: true, message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
                     }
                 })
             })
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async verifyEmailCode(payload, data) {
+        try {
+            let { email, code } = data
+            let otpData = await util.getUserOTP(payload._id, email, "email")
+            let OTP = otpData[0] ? otpData[0].email_otp : "";
+            let email_otp_datetime = otpData[0] ? otpData[0].email_otp_datetime : ""
+            if (OTP == code) {
+                if (util.isOTPNotExpired(email_otp_datetime, "email")) {
+                    await util.updateVerifyStatus(payload._id, "email", User);
+                } else throw new APIError({ message: 'You Provided Expired OTP' });
+            } else {
+                throw new APIError({ message: 'You Provided Invalid code' });
+            }
         } catch (error) {
             throw error;
         }

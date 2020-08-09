@@ -18,6 +18,14 @@ class EnquiryService {
             throw error;
         }
     }
+    async getEnquiry() {
+        try {
+            let enquiry = await Enquiry.find({});
+            return enquiry;
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async contactUs(data) {
         try {
@@ -46,6 +54,14 @@ class EnquiryService {
             });
             teamMember = await teamMember.save();
             return teamMember
+        } catch (error) {
+            throw error;
+        }
+    }
+    async getTeamMember() {
+        try {
+            let teamMember = await Team.find({});
+            return teamMember;
         } catch (error) {
             throw error;
         }

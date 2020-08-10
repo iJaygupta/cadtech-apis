@@ -6,6 +6,7 @@ const HttpStatus = require('http-status-codes');
 import msg from '../../lib/messages';
 const util = require('../../common/auth');
 const emailService = require('../../lib/mailer');
+const smsService = require('../../lib/sms');
 
 
 class AuthService {
@@ -99,10 +100,47 @@ class AuthService {
         }
     }
 
-    async sendPhoneCode() {
+    async sendPhoneCode(payload) {
         try {
-            let user = await User.find({});
-            return user
+            let userDetails = await User.findById({ _id: payload._id });
+            let { mobile } = userDetails;
+            if (userDetails.is_mobile_verified) {
+                throw new APIError({ message: 'Phone Already Verified', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            let OTP = util.generateOTP("phone");
+            console.log(OTP)
+            let paramForMsg = util.prepareOTPParam("phone", OTP);
+            console.log(paramForMsg)
+            let otpDateTime = new Date();
+            await util.putOTPIntoCollection(payload._id, mobile, OTP, otpDateTime, "phone");
+
+            await new Promise((resolve, reject) => {
+                smsService.sendMsg(mobile, "Verification", paramForMsg, function (output) {
+                    if (!output.error) {
+                        resolve(output);
+                    } else {
+                        console.log(output)
+                        reject({ error: true, message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
+                    }
+                })
+            })
+        } catch (error) {
+            throw error;
+        }
+    }
+    async verifyMobileCode(payload, data) {
+        try {
+            let { mobile, code } = data
+            let otpData = await util.getUserOTP(payload._id, mobile, "phone")
+            let OTP = otpData[0] ? otpData[0].mobile_otp : "";
+            let mobile_otp_datetime = otpData[0] ? otpData[0].mobile_otp_datetime : ""
+            if (OTP == code) {
+                if (util.isOTPNotExpired(mobile_otp_datetime, "phone")) {
+                    await util.updateVerifyStatus(payload._id, "phone", User);
+                } else throw new APIError({ message: 'You Provided Expired OTP' });
+            } else {
+                throw new APIError({ message: 'You Provided Invalid code' });
+            }
         } catch (error) {
             throw error;
         }

@@ -32,6 +32,11 @@ class AuthRoute {
             security.auth.bind(this),
             this.sendPhoneCode.bind(this)
         );
+        this.router.post(
+            '/v1/auth/verify-phone-code',
+            security.auth.bind(this),
+            this.verifyMobileCode.bind(this)
+        );
     }
 
     async register(req, res, next) {
@@ -63,7 +68,7 @@ class AuthRoute {
     async verifyEmailCode(req, res, next) {
         try {
             const $response = await AuthService.verifyEmailCode(req.user, req.body);
-            sendSuccess(res, HttpStatus.OK, 2000, $response);
+            sendSuccess(res, HttpStatus.OK, 2016, $response);
         } catch (error) {
             sendError(res, error);
         }
@@ -73,6 +78,14 @@ class AuthRoute {
         try {
             const $response = await AuthService.sendPhoneCode(req.user);
             sendSuccess(res, HttpStatus.OK, 2008, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async verifyMobileCode(req, res, next) {
+        try {
+            const $response = await AuthService.verifyMobileCode(req.user, req.body);
+            sendSuccess(res, HttpStatus.OK, 2026, $response);
         } catch (error) {
             sendError(res, error);
         }

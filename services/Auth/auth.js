@@ -136,7 +136,7 @@ class AuthService {
             let mobile_otp_datetime = otpData[0] ? otpData[0].mobile_otp_datetime : ""
             if (OTP == code) {
                 if (util.isOTPNotExpired(mobile_otp_datetime, "phone")) {
-                    await util.updateVerifyStatus(payload._id, "phone", User);
+                    await util.updateVerifyStatus(payload._id, "phone");
                 } else throw new APIError({ message: 'You Provided Expired OTP' });
             } else {
                 throw new APIError({ message: 'You Provided Invalid code' });

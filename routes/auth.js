@@ -84,7 +84,7 @@ class AuthRoute {
     }
     async verifyMobileCode(req, res, next) {
         try {
-            const $response = await AuthService.verifyMobileCode(req.user);
+            const $response = await AuthService.verifyMobileCode(req.user, req.body);
             sendSuccess(res, HttpStatus.OK, 2026, $response);
         } catch (error) {
             sendError(res, error);

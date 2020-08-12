@@ -1,6 +1,7 @@
 const random = require("randomstring");
 const emailTemplate = require("../lib/templates");
 import Otp from '../models/Otp';
+import User from '../models/User';
 const moment = require("moment");
 
 exports.generateOTP = function (type) {
@@ -22,7 +23,7 @@ exports.putOTPIntoCollection = function (user_id, id, otp, dateTime, type) {
     })
 }
 
-exports.updateVerifyStatus = function (id, type, User) {
+exports.updateVerifyStatus = function (id, type) {
     return new Promise((resolve, reject) => {
         let params = (type == "email") ? { is_email_verified: true } : { is_phone_verified: true };
         User.updateOne({ _id: id }, { $set: params }).then((data) => {

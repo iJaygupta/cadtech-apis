@@ -1,7 +1,7 @@
 import APIError from '../../lib/APIError';
 import { msg } from '../../lib/messages';
 import ContactUs from '../../models/ContactUs';
-import Team from '../../models/Team';
+import Team from '../../models/team';
 import Enquiry from '../../models/Enquiry';
 const HttpStatus = require('http-status-codes');
 

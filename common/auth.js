@@ -55,6 +55,15 @@ exports.isOTPNotExpired = (lastOTPSentTime, type) => {
         return true;
     }
 }
+exports.decodeForgotPasswordToken = function (response, token) {
+    return jwt.verify(token, process.env.SECRET_KEY, function (err, data) {
+        if (err && err.name === 'TokenExpiredError')
+            return utils.sendResponse(response, true, 401, 4036);
+        if (err && err.name != 'TokenExpiredError')
+            return utils.sendResponse(response, false, 401, 4037);
+        return data;
+    })
+}
 
 const calculateTimeDiff = (lastOTPSentTime) => {
     var now = moment(new Date()); //todays date

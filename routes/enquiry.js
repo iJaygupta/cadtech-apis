@@ -2,6 +2,8 @@ import security from '../lib/security';
 import EnquiryService from '../services/Enquiry/enquiry';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
 const HttpStatus = require('http-status-codes');
+const validator = require('../lib/validator');
+const schema = require("../schemas/enquiry")
 
 class EnquiryRoute {
     constructor(router) {
@@ -12,6 +14,7 @@ class EnquiryRoute {
     registerRoutes() {
         this.router.post(
             '/v1/enquiry',
+            validator.validateAjv(schema.addEnquiry),
             security.auth.bind(this),
             this.addEnquiry.bind(this)
         );
@@ -22,11 +25,13 @@ class EnquiryRoute {
         );
         this.router.post(
             '/v1/enquiry/contactus',
+            validator.validateAjv(schema.contactUs),
             security.auth.bind(this),
             this.contactUs.bind(this)
         );
         this.router.post(
             '/v1/enquiry/team',
+            validator.validateAjv(schema.addTeamMember),
             security.auth.bind(this),
             this.addTeamMember.bind(this)
         );

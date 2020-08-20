@@ -2,6 +2,8 @@ import security from '../lib/security';
 import ProfileService from '../services/Profile/profile';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
 const HttpStatus = require('http-status-codes');
+const validator = require('../lib/validator');
+const schema = require("../schemas/profile")
 
 class CourseRoute {
     constructor(router) {
@@ -17,6 +19,7 @@ class CourseRoute {
         );
         this.router.put(
             '/v1/profile',
+            validator.validateAjv(schema.updateUserAccountDetails),
             security.auth.bind(this),
             this.updateUserAccountDetails.bind(this)
         );
@@ -27,6 +30,7 @@ class CourseRoute {
         );
         this.router.put(
             '/v1/profile/changepassword',
+            validator.validateAjv(schema.updateUserPassword),
             security.auth.bind(this),
             this.updateUserPassword.bind(this)
         );

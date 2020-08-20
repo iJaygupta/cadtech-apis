@@ -53,7 +53,7 @@ module.exports = {
 	},
 
 	// key to sign tokens
-	jwtSecretKey: process.env.JWT_SECRET_KEY || '-',
+	jwtSecretKey: process.env.JWT_SECRET_KEY || 'YWRtaW46cjNAY3RpMG4=',
 
 	// key to sign store cookies
 	cookieSecretKey: process.env.COOKIE_SECRET_KEY || '-',

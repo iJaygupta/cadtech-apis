@@ -37,6 +37,14 @@ class AuthRoute {
             security.auth.bind(this),
             this.verifyMobileCode.bind(this)
         );
+        this.router.post(
+            '/v1/auth/forgotPassword',
+            this.forgotPassword.bind(this)
+        );
+        this.router.get(
+            '/v1/auth/confirm-forgot-password/:token',
+            this.confirmForgotPassword.bind(this)
+        );
     }
 
     async register(req, res, next) {
@@ -65,6 +73,7 @@ class AuthRoute {
             sendError(res, error);
         }
     }
+
     async verifyEmailCode(req, res, next) {
         try {
             const $response = await AuthService.verifyEmailCode(req.user, req.body);
@@ -82,6 +91,7 @@ class AuthRoute {
             sendError(res, error);
         }
     }
+
     async verifyMobileCode(req, res, next) {
         try {
             const $response = await AuthService.verifyMobileCode(req.user, req.body);
@@ -91,7 +101,22 @@ class AuthRoute {
         }
     }
 
+    async forgotPassword(req, res, next) {
+        try {
+            const $response = await AuthService.forgotPassword(req.body);
+            sendSuccess(res, HttpStatus.OK, 2005, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
 
+    async confirmForgotPassword(req, res, next) {
+        try {
+            await AuthService.confirmForgotPassword(req.params.token, res);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
 
 }
 

@@ -2,6 +2,8 @@ import security from '../lib/security';
 import AuthService from '../services/Auth/auth';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
 const HttpStatus = require('http-status-codes');
+const validator = require('../lib/validator');
+const schema = require("../schemas/auth")
 class AuthRoute {
     constructor(router) {
         this.router = router;
@@ -11,10 +13,12 @@ class AuthRoute {
     registerRoutes() {
         this.router.post(
             '/v1/auth/register',
+            validator.validateAjv(schema.register),
             this.register.bind(this)
         );
         this.router.post(
             '/v1/auth/login',
+            validator.validateAjv(schema.login),
             this.login.bind(this)
         );
         this.router.get(
@@ -24,6 +28,7 @@ class AuthRoute {
         );
         this.router.post(
             '/v1/auth/verify-email-code',
+            validator.validateAjv(schema.verifyEmailCode),
             security.auth.bind(this),
             this.verifyEmailCode.bind(this)
         );
@@ -34,6 +39,7 @@ class AuthRoute {
         );
         this.router.post(
             '/v1/auth/verify-phone-code',
+            validator.validateAjv(schema.verifyMobileCode),
             security.auth.bind(this),
             this.verifyMobileCode.bind(this)
         );

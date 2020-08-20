@@ -2,7 +2,8 @@ import security from '../lib/security';
 import CourseService from '../services/Course/course';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
 const HttpStatus = require('http-status-codes');
-
+const validator = require('../lib/validator');
+const schema = require("../schemas/course");
 
 class CourseRoute {
     constructor(router) {
@@ -13,6 +14,7 @@ class CourseRoute {
     registerRoutes() {
         this.router.post(
             '/v1/course',
+            validator.validateAjv(schema.addCourse),
             security.auth.bind(this),
             this.addCourse.bind(this)
         );
@@ -26,6 +28,7 @@ class CourseRoute {
         );
         this.router.put(
             '/v1/course/:courseId',
+            validator.validateAjv(schema.updateCourse),
             security.auth.bind(this),
             this.updateCourse.bind(this)
         );

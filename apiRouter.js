@@ -2,7 +2,7 @@ import express from 'express';
 import AuthRoute from './routes/auth';
 import ProfileRoute from './routes/profile';
 import CourseRoute from './routes/course';
-import EnquiryRoute from './routes/Enquiry';
+import EnquiryRoute from './routes/enquiry';
 
 
 

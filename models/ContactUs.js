@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 var ContactusSchema = new mongoose.Schema({
     email: { type: String },
     name: { type: String },
-    phone_number: { type: String },
-    query: { type: String }
+    subject: { type: String },
+    message: { type: String }
 },
     {
         timestamps: true

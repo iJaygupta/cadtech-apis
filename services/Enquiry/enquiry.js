@@ -29,15 +29,15 @@ class EnquiryService {
 
     async contactUs(data) {
         try {
-            const { email, name, phone_number, query } = data;
+            const { email, name, subject, message } = data;
             const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
             if (!emailRegex.test(email)) throw new APIError({ message: msg("please enter a valid email"), status: HttpStatus.UNPROCESSABLE_ENTITY })
 
             let contactus = new ContactUs({
                 email,
                 name,
-                phone_number,
-                query
+                subject,
+                message
             });
             contactus = await contactus.save();
             return contactus

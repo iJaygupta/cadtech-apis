@@ -26,7 +26,6 @@ class EnquiryRoute {
         this.router.post(
             '/v1/enquiry/contactus',
             validator.validateAjv(schema.contactUs),
-            security.auth.bind(this),
             this.contactUs.bind(this)
         );
         this.router.post(

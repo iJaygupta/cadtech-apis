@@ -2,15 +2,11 @@ module.exports = {
 
     register: {
         "properties": {
-            "first_name": { "type": ["string"] },
-            "last_name": { "type": ["string"] },
+            "name": { "type": ["string"] },
             "email": { "type": ["string"] },
-            "source": { "type": ["string"] },
-            "mobile_number": { "type": ["string"], "maxLength": 12 },
             "password": { "type": ["string"] },
-
         },
-        "required": ["mobile_number","email","first_name","last_name"],
+        "required": ["name", "email", "password"],
         "additionalProperties": false,
     },
     login: {
@@ -37,7 +33,5 @@ module.exports = {
         "required": ["mobile", "code"],
         "additionalProperties": false,
     },
-    
+
 }
-
-

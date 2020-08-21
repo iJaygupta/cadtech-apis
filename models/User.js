@@ -11,11 +11,7 @@ const STATUS = require('./Status');
 
 const userSchema = mongoose.Schema(
     {
-        first_name: {
-            type: String,
-            trim: true
-        },
-        last_name: {
+        name: {
             type: String,
             trim: true
         },
@@ -131,8 +127,7 @@ userSchema.methods.generateAuthToken = async function () {
 
 let transformFields = [
     '_id',
-    'first_name',
-    'last_name',
+    'name',
     'email',
     'mobile_number',
     'roles',
@@ -173,11 +168,11 @@ userSchema.statics = {
     async findByCredentials(email, password) {
         const user = await User.findOne({ email });
         if (!user) {
-            throw new Error(msg.msg('invalid_creds'));
+            return false;
         }
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
-            throw new Error(msg.msg('invalid_creds'));
+            return false;
         }
         return user;
     },
@@ -198,21 +193,6 @@ userSchema.statics = {
     },
 
     async isValidPassword(user, password) {
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isPasswordMatch) {
-            throw new Error(msg.msg('invalid_creds'));
-        }
-        return user;
-    },
-
-    async findByCredentials(email, password) {
-        // Search for a user by email and password.
-        console.log('===>', email);
-        const user = await User.findOne({ email });
-        console.log('-------->', user);
-        if (!user) {
-            throw new Error(msg.msg('invalid_creds'));
-        }
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
             throw new Error(msg.msg('invalid_creds'));

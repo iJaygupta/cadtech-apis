@@ -18,12 +18,6 @@ class AuthService {
             if (await User.isEmailTaken(data.email)) {
                 throw new APIError({ message: 'Email already exist', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
-            if (await User.isMobileTaken(data.mobile_number)) {
-                throw new APIError({
-                    message: 'Mobile Number already exist',
-                    status: HttpStatus.UNPROCESSABLE_ENTITY
-                });
-            }
             const user = new User(data);
             const savedUser = await user.save();
             return savedUser.transform();

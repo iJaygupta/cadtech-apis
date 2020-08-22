@@ -39,7 +39,10 @@ class EnquiryRoute {
             security.auth.bind(this),
             this.getTeamMember.bind(this)
         );
-
+        this.router.get(
+            '/v1/enquiry/lookup',
+            this.getLookUpData.bind(this)
+        );
     }
 
     async addEnquiry(req, res, next) {
@@ -50,6 +53,7 @@ class EnquiryRoute {
             sendError(res, error);
         }
     }
+
     async getEnquiry(req, res, next) {
         try {
             const $response = await EnquiryService.getEnquiry(req.body);
@@ -76,10 +80,20 @@ class EnquiryRoute {
             sendError(res, error);
         }
     }
+
     async getTeamMember(req, res, next) {
         try {
             const $response = await EnquiryService.getTeamMember(req.query);
             sendSuccess(res, HttpStatus.OK, 2025, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async getLookUpData(req, res, next) {
+        try {
+            const $response = await EnquiryService.getLookUpData(req.query);
+            sendSuccess(res, HttpStatus.OK, 2027, $response);
         } catch (error) {
             sendError(res, error);
         }

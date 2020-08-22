@@ -1,0 +1,22 @@
+{
+  "title": "Cadtech ~ Hookup with Trending Technologies",
+  "contact_details": {
+      "name": "Cadtech",
+      "address": "Add- T-4, 1st floor,Shivalik Nagar, Near ATM Chowk, BHEL, Ranipur, Haridwar (Uttrakhand)",
+      "phone_number": "+91 9084868584"
+  },
+  "common_questions": [
+      {
+          "question_id": "101",
+          "question": "What type of app is this ? Any reference app link will be helpful"
+      },
+      {
+          "question_id": "102",
+          "question": "How can this app helpful"
+      },
+      {
+          "question_id": "103",
+          "question": "Is this app available for ios or android both"
+      }
+  ]
+}

@@ -2,6 +2,7 @@ import APIError from '../../lib/APIError';
 import { msg } from '../../lib/messages';
 import ContactUs from '../../models/ContactUs';
 import Team from '../../models/Team';
+import Common from '../../models/Common';
 import Enquiry from '../../models/Enquiry';
 const HttpStatus = require('http-status-codes');
 
@@ -62,6 +63,15 @@ class EnquiryService {
         try {
             let teamMember = await Team.find({});
             return teamMember;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getLookUpData() {
+        try {
+            let commonData = await Common.find({});
+            return commonData;
         } catch (error) {
             throw error;
         }

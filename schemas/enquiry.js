@@ -13,6 +13,7 @@ module.exports = {
       "message": { "type": ["string"] },
       "name": { "type": ["string"] },
       "subject": { "type": ["string"] },
+      "slug": { "type": ["string"] },
     },
     "additionalProperties": false,
   },

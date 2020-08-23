@@ -77,6 +77,32 @@ class EnquiryService {
         }
     }
 
+    async addSubscribe(data) {
+        try {
+            const { email } = data;
+            const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+            if (!emailRegex.test(email)) throw new APIError({ message: msg("please enter a valid email"), status: HttpStatus.UNPROCESSABLE_ENTITY })
+
+            let subcribe = new ContactUs({
+                email,
+                slug:'subscribe'
+            });
+            subcribe = await subcribe.save();
+            return subcribe
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getSubscribeUser() {
+        try {
+            let subscribeUser = await ContactUs.find({slug:"subscribe"});
+            return subscribeUser;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 export default new EnquiryService();

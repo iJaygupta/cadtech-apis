@@ -43,6 +43,16 @@ class EnquiryRoute {
             '/v1/enquiry/lookup',
             this.getLookUpData.bind(this)
         );
+        this.router.post(
+            '/v1/enquiry/subcribe',
+            validator.validateAjv(schema.contactUs),
+            this.addSubscribe.bind(this)
+        );
+        this.router.get(
+            '/v1/enquiry/getSubscribe',
+            security.auth.bind(this),
+            this.getSubscribedUsers.bind(this)
+        );
     }
 
     async addEnquiry(req, res, next) {
@@ -93,6 +103,24 @@ class EnquiryRoute {
     async getLookUpData(req, res, next) {
         try {
             const $response = await EnquiryService.getLookUpData(req.query);
+            sendSuccess(res, HttpStatus.OK, 2027, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async addSubscribe(req, res, next) {
+        try {
+            const $response = await EnquiryService.addSubscribe(req.body);
+            sendSuccess(res, HttpStatus.OK, 2028, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async getSubscribedUsers(req, res, next) {
+        try {
+            const $response = await EnquiryService.getSubscribedUsers(req.query);
             sendSuccess(res, HttpStatus.OK, 2027, $response);
         } catch (error) {
             sendError(res, error);

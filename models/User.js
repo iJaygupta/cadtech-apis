@@ -110,7 +110,6 @@ userSchema.methods.hasRole = function (data) {
     if (data === ROLES.ADMIN) {
         role = user.roles.some(el => el === ROLES.ADMIN || el === ROLES.SELLER);
     }
-    console.log(role);
     return role;
 };
 
@@ -201,6 +200,6 @@ userSchema.statics = {
     },
 };
 
-User = mongoose.model('User', userSchema);
+User = mongoose.model('user', userSchema);
 
 module.exports = User;

@@ -85,7 +85,7 @@ class EnquiryService {
 
             let subcribe = new ContactUs({
                 email,
-                slug:'subscribe'
+                slug: 'subscribe'
             });
             subcribe = await subcribe.save();
             return subcribe
@@ -94,9 +94,9 @@ class EnquiryService {
         }
     }
 
-    async getSubscribeUser() {
+    async getSubscribedUsers() {
         try {
-            let subscribeUser = await ContactUs.find({slug:"subscribe"});
+            let subscribeUser = await ContactUs.find({ slug: "subscribe" });
             return subscribeUser;
         } catch (error) {
             throw error;

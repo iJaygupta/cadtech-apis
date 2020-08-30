@@ -51,7 +51,7 @@ class EnquiryRoute {
         this.router.get(
             '/v1/enquiry/getSubscribe',
             security.auth.bind(this),
-            this.getSubscribeUser.bind(this)
+            this.getSubscribedUsers.bind(this)
         );
     }
 
@@ -118,9 +118,9 @@ class EnquiryRoute {
         }
     }
 
-    async getSubscribeUser(req, res, next) {
+    async getSubscribedUsers(req, res, next) {
         try {
-            const $response = await EnquiryService.getSubscribeUser(req.query);
+            const $response = await EnquiryService.getSubscribedUsers(req.query);
             sendSuccess(res, HttpStatus.OK, 2027, $response);
         } catch (error) {
             sendError(res, error);

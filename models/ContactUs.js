@@ -12,6 +12,6 @@ var ContactusSchema = new mongoose.Schema({
 );
 
 
-const ContactUs = mongoose.model('contactUs', ContactusSchema);
+const ContactUs = mongoose.model('contactus', ContactusSchema);
 
 export default ContactUs;

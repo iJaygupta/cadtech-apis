@@ -18,11 +18,11 @@ var commonSchema = mongoose.Schema({
     }
   ],
 },
-{
-  timestamps: true,
-}
+  {
+    timestamps: true,
+  }
 );
 
-const Common = mongoose.model('Common', commonSchema);
+const Common = mongoose.model('common', commonSchema);
 
 export default Common;

@@ -67,6 +67,19 @@ class EnquiryService {
             throw error;
         }
     }
+    async deleteTeamMember(teamId) {
+        try {
+            let result = await Team.findByIdAndDelete(teamId);
+            console.log(result)
+            if (!result) {
+                throw new APIError({ message: 'TeamMember does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
     async getLookUpData() {
         try {
@@ -85,7 +98,7 @@ class EnquiryService {
 
             let subcribe = new ContactUs({
                 email,
-                slug:'subscribe'
+                slug: 'subscribe'
             });
             subcribe = await subcribe.save();
             return subcribe
@@ -96,13 +109,13 @@ class EnquiryService {
 
     async getSubscribeUser() {
         try {
-            let subscribeUser = await ContactUs.find({slug:"subscribe"});
+            let subscribeUser = await ContactUs.find({ slug: "subscribe" });
             return subscribeUser;
         } catch (error) {
             throw error;
         }
     }
-
+   
 }
 
 export default new EnquiryService();

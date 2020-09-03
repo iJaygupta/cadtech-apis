@@ -11,7 +11,12 @@ const STATUS = require('./Status');
 
 const userSchema = mongoose.Schema(
     {
-        name: {
+        first_Name: {
+            type: String,
+            trim: true
+        },
+
+        last_Name: {
             type: String,
             trim: true
         },
@@ -24,11 +29,8 @@ const userSchema = mongoose.Schema(
                 }
             }
         },
-        source: {
-            type: String,
-            lowercase: true
-        },
-        mobile_number: {
+
+        mobile: {
             type: String,
             // required: true,
             // unique: true,
@@ -39,6 +41,7 @@ const userSchema = mongoose.Schema(
             // required: true,
             minLength: 7
         },
+
         tokens: [
             {
                 token: {
@@ -55,8 +58,7 @@ const userSchema = mongoose.Schema(
             type: Boolean,
             required: false
         },
-        country: String,
-        dob: String,
+
         gender: {
             type: String,
             enum: ['male', 'female']
@@ -64,6 +66,10 @@ const userSchema = mongoose.Schema(
         profile: {
             filename: String,
             alt: String
+        },
+        education: {
+            type: String,
+            trim: true
         },
         address: [ADDRESS],
         zone: [

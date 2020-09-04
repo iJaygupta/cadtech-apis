@@ -26,6 +26,8 @@ module.exports = {
       "order": { "type": ["number"] },
       "image": { "type": ["string"] },
       "is_active": { "type": ["boolean"] },
+      "social_link": { "type": ["object"] },
+
 
     },
     "additionalProperties": false,

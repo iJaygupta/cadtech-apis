@@ -7,7 +7,14 @@ var teamSchema = new mongoose.Schema({
     image: { type: String },
     bio: { type: String },
     order: { type: Number },
-    is_active: { type: Boolean, default: false }
+    is_active: { type: Boolean, default: false },
+    socail_link: {
+        facebook: { type: String },
+        linkedIn: { type: String },
+        instagram: { type: String },
+        twitter: { type: String }
+    }
+
 },
     {
         timestamps: true

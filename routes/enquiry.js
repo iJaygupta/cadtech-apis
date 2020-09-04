@@ -36,8 +36,12 @@ class EnquiryRoute {
         );
         this.router.get(
             '/v1/enquiry/team',
-            security.auth.bind(this),
             this.getTeamMember.bind(this)
+        );
+        this.router.delete(
+            '/v1/enquiry/team/:teamId',
+            security.auth.bind(this),
+            this.deleteTeamMember.bind(this)
         );
         this.router.get(
             '/v1/enquiry/lookup',
@@ -95,6 +99,14 @@ class EnquiryRoute {
         try {
             const $response = await EnquiryService.getTeamMember(req.query);
             sendSuccess(res, HttpStatus.OK, 2025, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async deleteTeamMember(req, res, next) {
+        try {
+            const $response = await EnquiryService.deleteTeamMember(req.params.teamId);
+            sendSuccess(res, HttpStatus.OK, 2029, $response);
         } catch (error) {
             sendError(res, error);
         }

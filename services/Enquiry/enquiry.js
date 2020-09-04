@@ -67,6 +67,19 @@ class EnquiryService {
             throw error;
         }
     }
+    async deleteTeamMember(teamId) {
+        try {
+            let result = await Team.findByIdAndDelete(teamId);
+            console.log(result)
+            if (!result) {
+                throw new APIError({ message: 'TeamMember does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
     async getLookUpData() {
         try {
@@ -102,7 +115,7 @@ class EnquiryService {
             throw error;
         }
     }
-
+   
 }
 
 export default new EnquiryService();

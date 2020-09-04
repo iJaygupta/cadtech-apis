@@ -2,11 +2,18 @@ module.exports = {
 
     register: {
         "properties": {
-            "name": { "type": ["string"] },
+            "first_Name": { "type": ["string"] },
+            "last_Name": { "type": ["string"] },
             "email": { "type": ["string"] },
+            "mobile_number": { "type": ["string"] },
             "password": { "type": ["string"] },
+            "education": { "type": ["string"] },
+            "gender": { "enum": ["female", "male"] },
+            "address": { "type": ["object"] },
+            "highest_qualification": { "type": ["string"] },
+            "work_status": { "type": ["object"] },
         },
-        "required": ["name", "email", "password"],
+        "required": ["first_Name", "last_Name", "email", "mobile_number", "password"],
         "additionalProperties": false,
     },
     login: {

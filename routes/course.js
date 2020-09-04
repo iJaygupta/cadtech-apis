@@ -16,6 +16,7 @@ class CourseRoute {
             '/v1/course',
             validator.validateAjv(schema.addCourse),
             security.auth.bind(this),
+            security.checkUserScope.bind(this, security.scope.ADMIN),
             this.addCourse.bind(this)
         );
         this.router.get(
@@ -30,13 +31,44 @@ class CourseRoute {
             '/v1/course/:courseId',
             validator.validateAjv(schema.updateCourse),
             security.auth.bind(this),
+            security.checkUserScope.bind(this, security.scope.ADMIN),
             this.updateCourse.bind(this)
         );
         this.router.delete(
             '/v1/course/:courseId',
             security.auth.bind(this),
+            security.checkUserScope.bind(this, security.scope.ADMIN),
             this.deleteCourse.bind(this)
         );
+        this.router.post(
+            '/v1/category/course',
+            validator.validateAjv(schema.addCourseCategory),
+            security.auth.bind(this),
+            security.checkUserScope.bind(this, security.scope.ADMIN),
+            this.addCourseCategory.bind(this)
+        );
+        this.router.get(
+            '/v1/category/course',
+            this.getCourseCategories.bind(this)
+        );
+        this.router.get(
+            '/v1/category/course/:course_category_id',
+            this.getSingleCourseCategory.bind(this)
+        );
+        this.router.put(
+            '/v1/category/course/:course_category_id',
+            validator.validateAjv(schema.updateCourseCategory),
+            security.auth.bind(this),
+            security.checkUserScope.bind(this, security.scope.ADMIN),
+            this.updateCourseCategory.bind(this)
+        );
+        this.router.delete(
+            '/v1/category/course/:course_category_id',
+            security.auth.bind(this),
+            security.checkUserScope.bind(this, security.scope.ADMIN),
+            this.deleteCourseCategory.bind(this)
+        );
+
     }
 
     async addCourse(req, res, next) {
@@ -79,6 +111,51 @@ class CourseRoute {
         try {
             const $response = await CourseService.deleteCourse(req.params.courseId);
             sendSuccess(res, HttpStatus.OK, 2020, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async addCourseCategory(req, res, next) {
+        try {
+            const $response = await CourseService.addCourseCategory(req.body);
+            sendSuccess(res, HttpStatus.OK, 2029, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async getCourseCategories(req, res, next) {
+        try {
+            const $response = await CourseService.getCourseCategories(req.query);
+            sendSuccess(res, HttpStatus.OK, 2030, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async getSingleCourseCategory(req, res, next) {
+        try {
+            const $response = await CourseService.getSingleCourseCategory(req.params.course_category_id);
+            sendSuccess(res, HttpStatus.OK, 2031, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async updateCourseCategory(req, res, next) {
+        try {
+            const $response = await CourseService.updateCourseCategory(req.params.course_category_id, req.body);
+            sendSuccess(res, HttpStatus.OK, 2032, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async deleteCourseCategory(req, res, next) {
+        try {
+            const $response = await CourseService.deleteCourseCategory(req.params.course_category_id);
+            sendSuccess(res, HttpStatus.OK, 2033, $response);
         } catch (error) {
             sendError(res, error);
         }

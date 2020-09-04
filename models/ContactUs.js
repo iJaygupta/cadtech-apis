@@ -5,7 +5,7 @@ var ContactusSchema = new mongoose.Schema({
     name: { type: String },
     subject: { type: String },
     message: { type: String },
-    slug:{type:String,default:"contact_us"}
+    slug: { type: String, default: "contact_us" }
 },
     {
         timestamps: true
@@ -13,6 +13,6 @@ var ContactusSchema = new mongoose.Schema({
 );
 
 
-const ContactUs = mongoose.model('contactUs', ContactusSchema);
+const ContactUs = mongoose.model('contactus', ContactusSchema);
 
 export default ContactUs;

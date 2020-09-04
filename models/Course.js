@@ -7,13 +7,15 @@ const courseSchema = new mongoose.Schema({
     description: String,
     slug: String,
     filename: String,
-    total_classes: Number
+    total_classes: Number,
+    course_category_id:
+        { type: mongoose.Schema.Types.ObjectId, ref: 'coursecategory', required: true }
 
 },
     {
         timestamps: true
     });
 
-const Course = mongoose.model('couurse', courseSchema);
+const Course = mongoose.model('course', courseSchema);
 
 export default Course;

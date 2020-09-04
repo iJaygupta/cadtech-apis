@@ -67,7 +67,6 @@ class AuthService {
                     if (!output.error) {
                         resolve(output);
                     } else {
-                        console.log(output)
                         reject({ error: true, message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
                     }
                 })
@@ -103,9 +102,7 @@ class AuthService {
                 throw new APIError({ message: 'Phone Already Verified', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
             let OTP = util.generateOTP("phone");
-            console.log(OTP)
             let paramForMsg = util.prepareOTPParam("phone", OTP);
-            console.log(paramForMsg)
             let otpDateTime = new Date();
             await util.putOTPIntoCollection(payload._id, mobile, OTP, otpDateTime, "phone");
 

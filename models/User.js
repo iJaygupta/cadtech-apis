@@ -11,12 +11,12 @@ const STATUS = require('./Status');
 
 const userSchema = mongoose.Schema(
     {
-        first_Name: {
+        firstName: {
             type: String,
             trim: true
         },
 
-        last_Name: {
+        lastName: {
             type: String,
             trim: true
         },
@@ -61,7 +61,7 @@ const userSchema = mongoose.Schema(
 
         gender: {
             type: String,
-            enum: ['male', 'female']
+            enum: ['male', 'female', '']
         },
         profile: {
             filename: String,
@@ -71,7 +71,10 @@ const userSchema = mongoose.Schema(
             type: String,
             trim: true
         },
-        address: [ADDRESS],
+        address: {
+            type: String,
+            trim: true
+        },
         zone: [
             { type: mongoose.Schema.Types.ObjectId, ref: 'Zone', required: true }
         ],
@@ -133,9 +136,10 @@ userSchema.methods.generateAuthToken = async function () {
 
 let transformFields = [
     '_id',
-    'name',
+    'firstName',
+    'lastName',
     'email',
-    'mobile_number',
+    'mobile',
     'roles',
     'zone',
     'documents',
@@ -171,8 +175,8 @@ userSchema.statics = {
     getTransformFields() {
         return transformFields;
     },
-    async findByCredentials(email, password) {
-        const user = await User.findOne({ email });
+    async findByCredentials(userName, password) {
+        const user = await User.findOne({ $or: [{ email: userName }, { mobile: userName }] });
         if (!user) {
             return false;
         }

@@ -28,8 +28,8 @@ class AuthService {
 
     async login(data) {
         try {
-            const { email, password } = data;
-            let user = await User.findByCredentials(email, password);
+            const { userName, password } = data;
+            let user = await User.findByCredentials(userName, password);
             if (!user) {
                 throw new APIError({
                     message: msg.msg('invalid_creds'),

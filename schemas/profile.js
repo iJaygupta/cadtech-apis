@@ -1,10 +1,15 @@
 module.exports = {
   updateUserAccountDetails: {
     "properties": {
-      "name": { "type": ["string"] },
+      "firstName": { "type": ["string"] },
+      "lastName": { "type": ["string"] },
       "email": { "type": ["string"] },
       "source": { "type": ["string"] },
-      "mobile_number": { "type": ["string"], "maxLength": 12 },
+      "mobile": { "type": ["string"], "maxLength": 12 },
+      "education": { "type": ["string"] },
+      "gender": { "type": ["string"] },
+      "address": { "type": ["string"] },
+
     },
     "additionalProperties": false,
   },

@@ -18,6 +18,9 @@ class AuthService {
             if (await User.isEmailTaken(data.email)) {
                 throw new APIError({ message: 'Email already exist', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
+            if (await User.isMobileTaken(data.mobile)) {
+                throw new APIError({ message: 'Mobile already exist', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
             const user = new User(data);
             const savedUser = await user.save();
             return savedUser.transform();
@@ -68,6 +71,7 @@ class AuthService {
                         resolve(output);
                     } else {
                         reject({ error: true, message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
+
                     }
                 })
             })

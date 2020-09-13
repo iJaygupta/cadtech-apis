@@ -106,7 +106,7 @@ class EnquiryRoute {
     async deleteTeamMember(req, res, next) {
         try {
             const $response = await EnquiryService.deleteTeamMember(req.params.teamId);
-            sendSuccess(res, HttpStatus.OK, 2029, $response);
+            sendSuccess(res, HttpStatus.OK, 2034, $response);
         } catch (error) {
             sendError(res, error);
         }

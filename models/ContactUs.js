@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 var ContactusSchema = new mongoose.Schema({
     email: { type: String },
     name: { type: String },
-    phone_number: { type: String },
-    query: { type: String }
+    subject: { type: String },
+    message: { type: String },
+    slug: { type: String, default: "contact_us" }
 },
     {
         timestamps: true
@@ -12,6 +13,6 @@ var ContactusSchema = new mongoose.Schema({
 );
 
 
-const ContactUs = mongoose.model('contactUs', ContactusSchema);
+const ContactUs = mongoose.model('contactus', ContactusSchema);
 
 export default ContactUs;

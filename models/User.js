@@ -11,11 +11,12 @@ const STATUS = require('./Status');
 
 const userSchema = mongoose.Schema(
     {
-        first_name: {
+        firstName: {
             type: String,
             trim: true
         },
-        last_name: {
+
+        lastName: {
             type: String,
             trim: true
         },
@@ -28,11 +29,8 @@ const userSchema = mongoose.Schema(
                 }
             }
         },
-        source: {
-            type: String,
-            lowercase: true
-        },
-        mobile_number: {
+
+        mobile: {
             type: String,
             // required: true,
             // unique: true,
@@ -43,6 +41,7 @@ const userSchema = mongoose.Schema(
             // required: true,
             minLength: 7
         },
+
         tokens: [
             {
                 token: {
@@ -59,17 +58,23 @@ const userSchema = mongoose.Schema(
             type: Boolean,
             required: false
         },
-        country: String,
-        dob: String,
+
         gender: {
             type: String,
-            enum: ['male', 'female']
+            enum: ['male', 'female', '']
         },
         profile: {
             filename: String,
             alt: String
         },
-        address: [ADDRESS],
+        education: {
+            type: String,
+            trim: true
+        },
+        address: {
+            type: String,
+            trim: true
+        },
         zone: [
             { type: mongoose.Schema.Types.ObjectId, ref: 'Zone', required: true }
         ],
@@ -114,7 +119,6 @@ userSchema.methods.hasRole = function (data) {
     if (data === ROLES.ADMIN) {
         role = user.roles.some(el => el === ROLES.ADMIN || el === ROLES.SELLER);
     }
-    console.log(role);
     return role;
 };
 
@@ -131,10 +135,10 @@ userSchema.methods.generateAuthToken = async function () {
 
 let transformFields = [
     '_id',
-    'first_name',
-    'last_name',
+    'firstName',
+    'lastName',
     'email',
-    'mobile_number',
+    'mobile',
     'roles',
     'zone',
     'documents',
@@ -170,14 +174,14 @@ userSchema.statics = {
     getTransformFields() {
         return transformFields;
     },
-    async findByCredentials(email, password) {
-        const user = await User.findOne({ email });
+    async findByCredentials(userName, password) {
+        const user = await User.findOne({ $or: [{ email: userName }, { mobile: userName }] });
         if (!user) {
-            throw new Error(msg.msg('invalid_creds'));
+            return false;
         }
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
-            throw new Error(msg.msg('invalid_creds'));
+            return false;
         }
         return user;
     },
@@ -204,23 +208,8 @@ userSchema.statics = {
         }
         return user;
     },
-
-    async findByCredentials(email, password) {
-        // Search for a user by email and password.
-        console.log('===>', email);
-        const user = await User.findOne({ email });
-        console.log('-------->', user);
-        if (!user) {
-            throw new Error(msg.msg('invalid_creds'));
-        }
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isPasswordMatch) {
-            throw new Error(msg.msg('invalid_creds'));
-        }
-        return user;
-    },
 };
 
-User = mongoose.model('User', userSchema);
+User = mongoose.model('user', userSchema);
 
 module.exports = User;

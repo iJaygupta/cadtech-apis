@@ -10,7 +10,7 @@ var userOtp = new mongoose.Schema({
     email_otp_datetime: { type: Date }
 });
 
-const Otp = mongoose.model('Otp', userOtp);
+const Otp = mongoose.model('otp', userOtp);
 
 
 export default Otp;

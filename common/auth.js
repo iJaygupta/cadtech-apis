@@ -1,15 +1,17 @@
 const random = require("randomstring");
+var jwt = require('jsonwebtoken');
 const emailTemplate = require("../lib/templates");
 import Otp from '../models/Otp';
 import User from '../models/User';
 const moment = require("moment");
+const { sendError } = require('../lib/handleResponse');
 
 exports.generateOTP = function (type) {
     return (type == "phone" ? Math.floor(100000 + Math.random() * 900000) : random.generate(6));
 }
 
 exports.prepareOTPParam = function (type, otp) {
-    return ((type == "phone") ? `Dear Customer, Please confirm your phone number to complete your registration. Your verification code is ${otp} and expires in ${process.env.PHONE_OTP_VALID_TIME} minutes.\nThanks,\nThere App Dev Team. ` : emailTemplate.emailTemplate('userRegistration', otp));
+    return ((type == "phone") ? `Dear Customer, Please confirm your phone number to complete your registration. Your verification code is ${otp} and expires in ${process.env.PHONE_OTP_VALID_TIME} minutes.\nThanks,\nThere App Dev Team. ` : emailTemplate.emailTemplate('otp', otp));
 }
 
 exports.putOTPIntoCollection = function (user_id, id, otp, dateTime, type) {
@@ -54,6 +56,27 @@ exports.isOTPNotExpired = (lastOTPSentTime, type) => {
     } else {
         return true;
     }
+}
+
+exports.generateAuthToken = function (payload) {
+    return new Promise((resolve, reject) => {
+        jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: parseInt(process.env.SECRET_KEY_VALID_TIME) }, function (err, token) {
+            if (err) {
+                reject(err);
+            }
+            resolve(token);
+        });
+    })
+}
+
+exports.decodeForgotPasswordToken = function (response, token) {
+    return jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, data) {
+        if (err && err.name === 'TokenExpiredError')
+            return sendError(response, { message: "The Verification Link has been expired.Please Generate Once More to complete your reset password!" })
+        if (err && err.name != 'TokenExpiredError')
+            return sendError(response, { message: "Oops! Unable to authorize your request for reset password" })
+        return data;
+    })
 }
 
 const calculateTimeDiff = (lastOTPSentTime) => {

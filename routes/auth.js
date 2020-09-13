@@ -2,6 +2,8 @@ import security from '../lib/security';
 import AuthService from '../services/Auth/auth';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
 const HttpStatus = require('http-status-codes');
+const validator = require('../lib/validator');
+const schema = require("../schemas/auth")
 class AuthRoute {
     constructor(router) {
         this.router = router;
@@ -11,10 +13,12 @@ class AuthRoute {
     registerRoutes() {
         this.router.post(
             '/v1/auth/register',
+            validator.validateAjv(schema.register),
             this.register.bind(this)
         );
         this.router.post(
             '/v1/auth/login',
+            validator.validateAjv(schema.login),
             this.login.bind(this)
         );
         this.router.get(
@@ -24,6 +28,7 @@ class AuthRoute {
         );
         this.router.post(
             '/v1/auth/verify-email-code',
+            validator.validateAjv(schema.verifyEmailCode),
             security.auth.bind(this),
             this.verifyEmailCode.bind(this)
         );
@@ -34,8 +39,17 @@ class AuthRoute {
         );
         this.router.post(
             '/v1/auth/verify-phone-code',
+            validator.validateAjv(schema.verifyMobileCode),
             security.auth.bind(this),
             this.verifyMobileCode.bind(this)
+        );
+        this.router.post(
+            '/v1/auth/forgotPassword',
+            this.forgotPassword.bind(this)
+        );
+        this.router.get(
+            '/v1/auth/confirm-forgot-password/:token',
+            this.confirmForgotPassword.bind(this)
         );
     }
 
@@ -65,6 +79,7 @@ class AuthRoute {
             sendError(res, error);
         }
     }
+
     async verifyEmailCode(req, res, next) {
         try {
             const $response = await AuthService.verifyEmailCode(req.user, req.body);
@@ -82,6 +97,7 @@ class AuthRoute {
             sendError(res, error);
         }
     }
+
     async verifyMobileCode(req, res, next) {
         try {
             const $response = await AuthService.verifyMobileCode(req.user, req.body);
@@ -91,7 +107,22 @@ class AuthRoute {
         }
     }
 
+    async forgotPassword(req, res, next) {
+        try {
+            const $response = await AuthService.forgotPassword(req.body);
+            sendSuccess(res, HttpStatus.OK, 2005, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
 
+    async confirmForgotPassword(req, res, next) {
+        try {
+            await AuthService.confirmForgotPassword(req.params.token, res);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
 
 }
 

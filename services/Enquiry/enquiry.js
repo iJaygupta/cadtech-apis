@@ -2,8 +2,10 @@ import APIError from '../../lib/APIError';
 import { msg } from '../../lib/messages';
 import ContactUs from '../../models/ContactUs';
 import Team from '../../models/Team';
+import Common from '../../models/Common';
 import Enquiry from '../../models/Enquiry';
 const HttpStatus = require('http-status-codes');
+const helpers = require('../../common/utils');
 
 class EnquiryService {
 
@@ -29,18 +31,19 @@ class EnquiryService {
 
     async contactUs(data) {
         try {
-            const { email, name, phone_number, query } = data;
+            const { email, name, subject, message } = data;
             const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
             if (!emailRegex.test(email)) throw new APIError({ message: msg("please enter a valid email"), status: HttpStatus.UNPROCESSABLE_ENTITY })
 
             let contactus = new ContactUs({
                 email,
                 name,
-                phone_number,
-                query
+                subject,
+                message
             });
             contactus = await contactus.save();
-            return contactus
+            helpers.sendNotification({ email, notificationType: `contactUs`, notificationSubject: `Thanks For Contacting Us` });
+            return contactus;
         } catch (error) {
             throw error;
         }
@@ -62,6 +65,55 @@ class EnquiryService {
         try {
             let teamMember = await Team.find({});
             return teamMember;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async deleteTeamMember(teamId) {
+        try {
+            let result = await Team.findByIdAndDelete(teamId);
+            console.log(result)
+            if (!result) {
+                throw new APIError({ message: 'TeamMember does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    async getLookUpData() {
+        try {
+            let commonData = await Common.find({});
+            return commonData;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async addSubscribe(data) {
+        try {
+            const { email } = data;
+            const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+            if (!emailRegex.test(email)) throw new APIError({ message: msg("please enter a valid email"), status: HttpStatus.UNPROCESSABLE_ENTITY })
+
+            let subcribe = new ContactUs({
+                email,
+                slug: 'subscribe'
+            });
+            subcribe = await subcribe.save();
+            helpers.sendNotification({ email, notificationType: `subscribe`, notificationSubject: `Thanks For Subscribing CadTech` });
+            return subcribe;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getSubscribedUsers() {
+        try {
+            let subscribeUser = await ContactUs.find({ slug: "subscribe" });
+            return subscribeUser;
         } catch (error) {
             throw error;
         }

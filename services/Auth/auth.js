@@ -8,6 +8,8 @@ import { emailTemplate } from '../../lib/templates';
 const util = require('../../common/auth');
 const emailService = require('../../lib/mailer');
 const smsService = require('../../lib/sms');
+const helpers = require('../../common/utils');
+
 
 
 class AuthService {
@@ -20,6 +22,7 @@ class AuthService {
             }
             const user = new User(data);
             const savedUser = await user.save();
+            helpers.sendNotification({ email: user.email, notificationType: `registration`, notificationSubject: `Thanks For Signing Up` });
             return savedUser.transform();
         } catch (error) {
             throw error;

@@ -48,7 +48,7 @@ class EnquiryRoute {
             this.getLookUpData.bind(this)
         );
         this.router.post(
-            '/v1/enquiry/subcribe',
+            '/v1/enquiry/subscribe',
             validator.validateAjv(schema.contactUs),
             this.addSubscribe.bind(this)
         );

@@ -147,10 +147,10 @@ let transformFields = [
     'address',
     'status',
     'work_status',
-    'dob',
     'gender',
-    'country',
-    'vehicle_details'
+    'education',
+    'createdAt'
+
 ];
 
 userSchema.methods.transform = function () {

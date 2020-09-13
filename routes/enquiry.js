@@ -14,8 +14,8 @@ class EnquiryRoute {
     registerRoutes() {
         this.router.post(
             '/v1/enquiry',
-            validator.validateAjv(schema.addEnquiry),
             security.auth.bind(this),
+            validator.validateAjv(schema.addEnquiry),
             this.addEnquiry.bind(this)
         );
         this.router.get(
@@ -30,8 +30,8 @@ class EnquiryRoute {
         );
         this.router.post(
             '/v1/enquiry/team',
-            validator.validateAjv(schema.addTeamMember),
             security.auth.bind(this),
+            validator.validateAjv(schema.addTeamMember),
             this.addTeamMember.bind(this)
         );
         this.router.get(

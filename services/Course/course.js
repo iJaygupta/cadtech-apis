@@ -3,7 +3,7 @@ import CourseCategory from '../../models/CourseCategory';
 import APIError from '../../lib/APIError';
 const HttpStatus = require('http-status-codes');
 const mongoose = require("mongoose");
-const resPerPage = process.env.RESPONSE_PER_PAGE || 9;
+const resPerPage = process.env.RESPONSE_PER_PAGE || 12;
 
 class CourseService {
 

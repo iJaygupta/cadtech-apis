@@ -48,7 +48,8 @@ class CourseService {
                     if (err) {
                         reject({ error: true, message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
                     } else {
-                        resolve(data);
+                        let localFolderPath = `/Users/jaygupta/Desktop/exercise/cadtech-apis/uploads/user/profile/${userId}`
+                        await uploader.uploadFileOnS3("user/profile/" + userId, localFolderPath, request.files[0].filename);
                     }
                 })
             })

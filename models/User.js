@@ -149,8 +149,9 @@ let transformFields = [
     'work_status',
     'gender',
     'education',
-    'createdAt'
-
+    'createdAt',
+    'email_verified',
+    'mobile_verified'
 ];
 
 userSchema.methods.transform = function () {

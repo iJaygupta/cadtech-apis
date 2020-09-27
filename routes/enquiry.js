@@ -57,6 +57,11 @@ class EnquiryRoute {
             security.auth.bind(this),
             this.getSubscribedUsers.bind(this)
         );
+        this.router.post(
+            '/v1/enquiry/certificate/download',
+            security.auth.bind(this),
+            this.downloadStudentCertificate.bind(this)
+        );
     }
 
     async addEnquiry(req, res, next) {
@@ -133,6 +138,15 @@ class EnquiryRoute {
     async getSubscribedUsers(req, res, next) {
         try {
             const $response = await EnquiryService.getSubscribedUsers(req.query);
+            sendSuccess(res, HttpStatus.OK, 2027, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async downloadStudentCertificate(req, res, next) {
+        try {
+            const $response = await EnquiryService.downloadStudentCertificate(req.body);
             sendSuccess(res, HttpStatus.OK, 2027, $response);
         } catch (error) {
             sendError(res, error);

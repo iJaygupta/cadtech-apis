@@ -1,6 +1,7 @@
 import APIError from '../../lib/APIError';
 import { msg } from '../../lib/messages';
 import ContactUs from '../../models/ContactUs';
+import StudentCertificates from '../../models/StudentCertificates';
 import Team from '../../models/Team';
 import Common from '../../models/Common';
 import Enquiry from '../../models/Enquiry';
@@ -119,6 +120,22 @@ class EnquiryService {
         }
     }
 
+    async downloadStudentCertificate(data) {
+        try {
+            let { rollno } = data;
+            let subscribeUser = await StudentCertificates.find({ rollno });
+            console.log(subscribeUser)
+            if (!subscribeUser) {
+                throw new APIError({ message: 'RollNo does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            // subscribeUser = new StudentCertificates({
+            //     ...data
+            // });
+            return subscribeUser;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default new EnquiryService();

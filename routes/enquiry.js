@@ -59,7 +59,6 @@ class EnquiryRoute {
         );
         this.router.post(
             '/v1/enquiry/certificate/download',
-            security.auth.bind(this),
             this.downloadStudentCertificate.bind(this)
         );
     }
@@ -147,7 +146,7 @@ class EnquiryRoute {
     async downloadStudentCertificate(req, res, next) {
         try {
             const $response = await EnquiryService.downloadStudentCertificate(req.body);
-            sendSuccess(res, HttpStatus.OK, 2027, $response);
+            sendSuccess(res, HttpStatus.OK, 2035, $response);
         } catch (error) {
             sendError(res, error);
         }

@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 
 var studentCertificatesSchema = new mongoose.Schema({
-    rollno: { type: Number },
-    user_id: { type: String },
+    registration_id: { type: Number },
+    fullName: { type: String },
+    courseName: { type: String },
     grade: { type: String },
-    completedDate: { type: Date },
+    date: { type: Date },
 },
     {
         timestamps: true
@@ -12,6 +13,6 @@ var studentCertificatesSchema = new mongoose.Schema({
 );
 
 
-const StudentCertificates = mongoose.model('studentCertificates', studentCertificatesSchema);
+const StudentCertificates = mongoose.model('studentcertificates', studentCertificatesSchema);
 
 export default StudentCertificates;

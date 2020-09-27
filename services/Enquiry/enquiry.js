@@ -7,6 +7,8 @@ import Common from '../../models/Common';
 import Enquiry from '../../models/Enquiry';
 const HttpStatus = require('http-status-codes');
 const helpers = require('../../common/utils');
+const convertHtmlToPdf = require('../../lib/pdfConverter').convertHtmlToPdf;
+
 
 class EnquiryService {
 
@@ -122,16 +124,13 @@ class EnquiryService {
 
     async downloadStudentCertificate(data) {
         try {
-            let { rollno } = data;
-            let subscribeUser = await StudentCertificates.find({ rollno });
-            console.log(subscribeUser)
-            if (!subscribeUser) {
-                throw new APIError({ message: 'RollNo does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            let { registration_id } = data;
+            let certificateData = await StudentCertificates.find({ registration_id });
+            if (!certificateData.length) {
+                throw new APIError({ message: 'Certificate has not been issued to provided registration number', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
-            // subscribeUser = new StudentCertificates({
-            //     ...data
-            // });
-            return subscribeUser;
+            let certificateURL = await convertHtmlToPdf(certificateData[0]);
+            return certificateURL;
         } catch (error) {
             throw error;
         }

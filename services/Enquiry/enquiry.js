@@ -5,7 +5,6 @@ import StudentCertificates from '../../models/StudentCertificates';
 import Team from '../../models/Team';
 import Common from '../../models/Common';
 import Enquiry from '../../models/Enquiry';
-import Agent from '../../models/Agent';
 const HttpStatus = require('http-status-codes');
 const helpers = require('../../common/utils');
 const convertHtmlToPdf = require('../../lib/pdfConverter').convertHtmlToPdf;

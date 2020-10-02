@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 
 var studentCertificatesSchema = new mongoose.Schema({
-    registration_id: { type: Number },
+    registration_id: { type: Number, required: true, unique: true },
     fullName: { type: String },
-    courseName: { type: String },
+    course: { type: String },
     grade: { type: String },
     date: { type: Date },
+    isActive: { type: Boolean },
 },
     {
         timestamps: true

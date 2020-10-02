@@ -158,7 +158,7 @@ class EnquiryRoute {
     async uploadCsv(req, res, next) {
         try {
             const $response = await EnquiryService.uploadCsv(req, res);
-            sendSuccess(res, HttpStatus.OK, 2035, $response);
+            sendSuccess(res, HttpStatus.OK, 2036, $response);
         } catch (error) {
             sendError(res, error);
         }

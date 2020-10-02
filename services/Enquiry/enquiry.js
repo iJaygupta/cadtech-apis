@@ -140,11 +140,24 @@ class EnquiryService {
     }
 
     async uploadCsv(request, response) {
-        uploader.uploadFilesLocal("user", "cetificate", 1, request, response, async function (err, data) {
-            if (err) {
-                throw new APIError({ message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
-            } else {
-                try {
+        try {
+            let data = await this.bulkUpload(request, response)
+            data = helpers.prepareCsvData(data);
+            let bulWriteQuery = this.prepareDataForBulkUpload(data);
+            await StudentCertificates.bulkWrite(bulWriteQuery);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+
+    bulkUpload(request, response) {
+        return new Promise((resolve, reject) => {
+            uploader.uploadFilesLocal("user", "cetificate", 1, request, response, function (err, data) {
+                if (err) {
+                    reject({ message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
+                } else {
                     if (request.files && request.files[0]) {
                         var file = request.files[0];
                         var workbook = XLSX.readFile(file.path);
@@ -152,28 +165,39 @@ class EnquiryService {
                         if (workbook && workbook.SheetNames && workbook.SheetNames[0] && workbook.Sheets[workbook.SheetNames[0]]) {
                             var data = uploader.readBulkFile(workbook.Sheets[workbook.SheetNames[0]]);
                             if (data.length) {
-                                let agentData = await StudentCertificates.insertMany(data);
-                                return agentData;
+                                resolve(data);
                             } else {
-                                throw new APIError({
+                                reject({
                                     message: 'You Are Trying To Upload Empty File. Please try again later', status: HttpStatus.UNPROCESSABLE_ENTITY
                                 });
                             }
                         } else {
-                            throw new APIError({
+                            reject({
                                 message: 'Unable to process uploaded file. Please try again later', status: HttpStatus.UNPROCESSABLE_ENTITY
                             });
                         }
                     } else {
-                        throw new APIError({
+                        reject({
                             message: 'Attached file not found, please try again', status: HttpStatus.UNPROCESSABLE_ENTITY
                         });
                     }
-                } catch (error) {
-                    throw error;
+                }
+            })
+        })
+    }
+
+    prepareDataForBulkUpload(data) {
+        let bulkWriteQuery = [];
+        bulkWriteQuery = data.map((el, index) => {
+            return {
+                updateOne: {
+                    "filter": { registration_id: el.registration_id },
+                    "update": { $setOnInsert: el },
+                    "upsert": true
                 }
             }
         })
+        return bulkWriteQuery;
     }
 }
 

@@ -8,6 +8,8 @@ import { emailTemplate } from '../../lib/templates';
 const util = require('../../common/auth');
 const emailService = require('../../lib/mailer');
 const smsService = require('../../lib/sms');
+const helpers = require('../../common/utils');
+
 
 
 class AuthService {
@@ -18,8 +20,12 @@ class AuthService {
             if (await User.isEmailTaken(data.email)) {
                 throw new APIError({ message: 'Email already exist', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
+            if (await User.isMobileTaken(data.mobile)) {
+                throw new APIError({ message: 'Mobile already exist', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
             const user = new User(data);
             const savedUser = await user.save();
+            helpers.sendNotification({ email: user.email, notificationType: `registration`, notificationSubject: `Thanks For Signing Up` });
             return savedUser.transform();
         } catch (error) {
             throw error;
@@ -28,8 +34,8 @@ class AuthService {
 
     async login(data) {
         try {
-            const { email, password } = data;
-            let user = await User.findByCredentials(email, password);
+            const { userName, password } = data;
+            let user = await User.findByCredentials(userName, password);
             if (!user) {
                 throw new APIError({
                     message: msg.msg('invalid_creds'),
@@ -68,6 +74,7 @@ class AuthService {
                         resolve(output);
                     } else {
                         reject({ error: true, message: 'Something Went Wrong', status: HttpStatus.INTERNAL_SERVER_ERROR });
+
                     }
                 })
             })

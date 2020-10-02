@@ -19,8 +19,8 @@ class CourseRoute {
         );
         this.router.put(
             '/v1/profile',
-            validator.validateAjv(schema.updateUserAccountDetails),
             security.auth.bind(this),
+            validator.validateAjv(schema.updateUserAccountDetails),
             this.updateUserAccountDetails.bind(this)
         );
         this.router.post(
@@ -30,8 +30,8 @@ class CourseRoute {
         );
         this.router.put(
             '/v1/profile/changepassword',
-            validator.validateAjv(schema.updateUserPassword),
             security.auth.bind(this),
+            validator.validateAjv(schema.updateUserPassword),
             this.updateUserPassword.bind(this)
         );
     }

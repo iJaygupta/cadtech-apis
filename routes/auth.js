@@ -28,8 +28,8 @@ class AuthRoute {
         );
         this.router.post(
             '/v1/auth/verify-email-code',
-            validator.validateAjv(schema.verifyEmailCode),
             security.auth.bind(this),
+            validator.validateAjv(schema.verifyEmailCode),
             this.verifyEmailCode.bind(this)
         );
         this.router.get(
@@ -39,8 +39,8 @@ class AuthRoute {
         );
         this.router.post(
             '/v1/auth/verify-phone-code',
-            validator.validateAjv(schema.verifyMobileCode),
             security.auth.bind(this),
+            validator.validateAjv(schema.verifyMobileCode),
             this.verifyMobileCode.bind(this)
         );
         this.router.post(

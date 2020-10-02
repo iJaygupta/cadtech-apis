@@ -5,6 +5,7 @@ import Team from '../../models/Team';
 import Common from '../../models/Common';
 import Enquiry from '../../models/Enquiry';
 const HttpStatus = require('http-status-codes');
+const helpers = require('../../common/utils');
 
 class EnquiryService {
 
@@ -41,7 +42,8 @@ class EnquiryService {
                 message
             });
             contactus = await contactus.save();
-            return contactus
+            helpers.sendNotification({ email, notificationType: `contactUs`, notificationSubject: `Thanks For Contacting Us` });
+            return contactus;
         } catch (error) {
             throw error;
         }
@@ -101,7 +103,8 @@ class EnquiryService {
                 slug: 'subscribe'
             });
             subcribe = await subcribe.save();
-            return subcribe
+            helpers.sendNotification({ email, notificationType: `subscribe`, notificationSubject: `Thanks For Subscribing CadTech` });
+            return subcribe;
         } catch (error) {
             throw error;
         }
@@ -115,7 +118,7 @@ class EnquiryService {
             throw error;
         }
     }
-   
+
 }
 
 export default new EnquiryService();

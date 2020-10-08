@@ -16,7 +16,7 @@ STATUS.ORDER_PLACED];
 
 var OrderSchema = new mongoose.Schema({
     productId: [{ type: mongoose.Schema.Types.ObjectId, ref: "course" }],
-    coupon: { name: String, value: Number },
+    coupon: { type: String },
     customer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     status: { type: String, enum: orderStatus },
     paid: { type: Boolean, default: false },

@@ -4,7 +4,7 @@ import OrdersService from '../services/Order/order';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
 const HttpStatus = require('http-status-codes');
 const validator = require('../lib/validator');
-const schema = require("../schemas/enquiry")
+const schema = require("../schemas/order");
 
 
 
@@ -28,6 +28,7 @@ class OrdersRoute {
         this.router.post(
             '/v1/order',
             security.auth.bind(this),
+            validator.validateAjv(schema.createOrder),
             this.createOrder.bind(this)
         );
         this.router.put(

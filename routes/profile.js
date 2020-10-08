@@ -17,6 +17,11 @@ class CourseRoute {
             security.auth.bind(this),
             this.getUserAccountDetails.bind(this)
         );
+        this.router.get(
+            '/v1/profile/all',
+            security.auth.bind(this),
+            this.getAllUsers.bind(this)
+        );
         this.router.put(
             '/v1/profile',
             security.auth.bind(this),
@@ -67,6 +72,14 @@ class CourseRoute {
         try {
             const $response = await ProfileService.updateUserPassword(req.user, req.body);
             sendSuccess(res, HttpStatus.OK, 2015, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async getAllUsers(req, res, next) {
+        try {
+            const $response = await ProfileService.getAllUsers(req, res);
+            sendSuccess(res, HttpStatus.OK, 2043, $response);
         } catch (error) {
             sendError(res, error);
         }

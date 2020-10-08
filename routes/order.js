@@ -34,6 +34,7 @@ class OrdersRoute {
         this.router.put(
             '/v1/order/:orderId',
             security.auth.bind(this),
+            validator.validateAjv(schema.updateOrder),
             this.updateOrder.bind(this)
         );
         this.router.delete(
@@ -51,10 +52,12 @@ class OrdersRoute {
         );
         this.router.post(
             '/v1/cart',
+            validator.validateAjv(schema.addToCart),
             this.addToCart.bind(this)
         );
         this.router.put(
             '/v1/cart/:cartId',
+            validator.validateAjv(schema.updateCart),
             this.updateCart.bind(this)
         );
         this.router.delete(

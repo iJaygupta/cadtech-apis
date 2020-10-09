@@ -57,6 +57,14 @@ class EnquiryRoute {
             security.auth.bind(this),
             this.getSubscribedUsers.bind(this)
         );
+        this.router.post(
+            '/v1/enquiry/certificate/download',
+            this.downloadStudentCertificate.bind(this)
+        );
+        this.router.post(
+            '/v1/enquiry/certificates/data/upload',
+            this.uploadCsv.bind(this)
+        );
     }
 
     async addEnquiry(req, res, next) {
@@ -134,6 +142,23 @@ class EnquiryRoute {
         try {
             const $response = await EnquiryService.getSubscribedUsers(req.query);
             sendSuccess(res, HttpStatus.OK, 2027, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async downloadStudentCertificate(req, res, next) {
+        try {
+            const $response = await EnquiryService.downloadStudentCertificate(req.body);
+            sendSuccess(res, HttpStatus.OK, 2035, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async uploadCsv(req, res, next) {
+        try {
+            const $response = await EnquiryService.uploadCsv(req, res);
+            sendSuccess(res, HttpStatus.OK, 2036, $response);
         } catch (error) {
             sendError(res, error);
         }

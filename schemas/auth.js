@@ -2,26 +2,24 @@ module.exports = {
 
     register: {
         "properties": {
-            "first_Name": { "type": ["string"] },
-            "last_Name": { "type": ["string"] },
+            "firstName": { "type": ["string"] },
+            "lastName": { "type": ["string"] },
             "email": { "type": ["string"] },
-            "mobile_number": { "type": ["string"] },
+            "mobile": { "type": ["string"] },
             "password": { "type": ["string"] },
             "education": { "type": ["string"] },
-            "gender": { "enum": ["female", "male"] },
-            "address": { "type": ["object"] },
-            "highest_qualification": { "type": ["string"] },
-            "work_status": { "type": ["object"] },
+            "gender": { "type": ["string"] },
+            "address": { "type": ["string"] },
         },
-        "required": ["first_Name", "last_Name", "email", "mobile_number", "password"],
+        "required": ["firstName", "lastName", "mobile", "password"],
         "additionalProperties": false,
     },
     login: {
         "properties": {
-            "email": { "type": ["string"] },
+            "userName": { "type": ["string"] },
             "password": { "type": ["string"] },
         },
-        "required": ["email", "password"],
+        "required": ["userName", "password"],
         "additionalProperties": false,
     },
     verifyEmailCode: {

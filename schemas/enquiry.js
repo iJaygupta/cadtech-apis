@@ -17,6 +17,7 @@ module.exports = {
     },
     "additionalProperties": false,
   },
+
   addTeamMember: {
     "properties": {
       "designation": { "type": ["string"] },
@@ -27,10 +28,19 @@ module.exports = {
       "image": { "type": ["string"] },
       "is_active": { "type": ["boolean"] },
       "social_link": { "type": ["object"] },
-
-
     },
     "additionalProperties": false,
   },
+
+  bulkUpload: {
+    "properties": {
+      "Registration Id": { "type": ["number"] },
+      "Full Name": { "type": ["string"] },
+      "Course": { "type": ["string"] },
+      "Grade": { "type": ["string"] },
+      "Date": { "type": ["number"] },
+    },
+    "required": ["Registration Id", "Full Name", "Course", "Grade", "Date"],
+  }
 
 }

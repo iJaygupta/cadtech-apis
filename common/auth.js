@@ -11,7 +11,7 @@ exports.generateOTP = function (type) {
 }
 
 exports.prepareOTPParam = function (type, otp) {
-    return ((type == "phone") ? `Dear Customer, Please confirm your phone number to complete your registration. Your verification code is ${otp} and expires in ${process.env.PHONE_OTP_VALID_TIME} minutes.\nThanks,\nThere App Dev Team. ` : emailTemplate.emailTemplate('userRegistration', otp));
+    return ((type == "phone") ? `Dear Customer, Please confirm your phone number to complete your registration. Your verification code is ${otp} and expires in ${process.env.PHONE_OTP_VALID_TIME} minutes.\nThanks,\nThere App Dev Team. ` : emailTemplate.emailTemplate('otp', otp));
 }
 
 exports.putOTPIntoCollection = function (user_id, id, otp, dateTime, type) {

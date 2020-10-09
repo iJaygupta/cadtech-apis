@@ -21,6 +21,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "helmet": "^3.23.3",
+    "html-pdf": "^2.2.0",
     "http-status": "^1.4.2",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
@@ -31,9 +32,11 @@
     "nodemon": "^2.0.4",
     "randomstring": "^1.1.5",
     "response-time": "^2.3.2",
+    "rimraf": "^3.0.2",
     "s3": "^4.4.0",
     "twilio": "^3.48.2",
     "validator": "^13.1.1",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "xlsx": "^0.16.7"
   }
 }

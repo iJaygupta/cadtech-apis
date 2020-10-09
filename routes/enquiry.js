@@ -14,8 +14,8 @@ class EnquiryRoute {
     registerRoutes() {
         this.router.post(
             '/v1/enquiry',
-            validator.validateAjv(schema.addEnquiry),
             security.auth.bind(this),
+            validator.validateAjv(schema.addEnquiry),
             this.addEnquiry.bind(this)
         );
         this.router.get(
@@ -30,8 +30,8 @@ class EnquiryRoute {
         );
         this.router.post(
             '/v1/enquiry/team',
-            validator.validateAjv(schema.addTeamMember),
             security.auth.bind(this),
+            validator.validateAjv(schema.addTeamMember),
             this.addTeamMember.bind(this)
         );
         this.router.get(
@@ -48,7 +48,7 @@ class EnquiryRoute {
             this.getLookUpData.bind(this)
         );
         this.router.post(
-            '/v1/enquiry/subcribe',
+            '/v1/enquiry/subscribe',
             validator.validateAjv(schema.contactUs),
             this.addSubscribe.bind(this)
         );
@@ -56,6 +56,14 @@ class EnquiryRoute {
             '/v1/enquiry/getSubscribe',
             security.auth.bind(this),
             this.getSubscribedUsers.bind(this)
+        );
+        this.router.post(
+            '/v1/enquiry/certificate/download',
+            this.downloadStudentCertificate.bind(this)
+        );
+        this.router.post(
+            '/v1/enquiry/certificates/data/upload',
+            this.uploadCsv.bind(this)
         );
     }
 
@@ -106,7 +114,7 @@ class EnquiryRoute {
     async deleteTeamMember(req, res, next) {
         try {
             const $response = await EnquiryService.deleteTeamMember(req.params.teamId);
-            sendSuccess(res, HttpStatus.OK, 2029, $response);
+            sendSuccess(res, HttpStatus.OK, 2034, $response);
         } catch (error) {
             sendError(res, error);
         }
@@ -134,6 +142,23 @@ class EnquiryRoute {
         try {
             const $response = await EnquiryService.getSubscribedUsers(req.query);
             sendSuccess(res, HttpStatus.OK, 2027, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async downloadStudentCertificate(req, res, next) {
+        try {
+            const $response = await EnquiryService.downloadStudentCertificate(req.body);
+            sendSuccess(res, HttpStatus.OK, 2035, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async uploadCsv(req, res, next) {
+        try {
+            const $response = await EnquiryService.uploadCsv(req, res);
+            sendSuccess(res, HttpStatus.OK, 2036, $response);
         } catch (error) {
             sendError(res, error);
         }

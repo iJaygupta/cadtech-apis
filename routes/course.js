@@ -14,8 +14,8 @@ class CourseRoute {
     registerRoutes() {
         this.router.post(
             '/v1/course',
-            validator.validateAjv(schema.addCourse),
             security.auth.bind(this),
+            validator.validateAjv(schema.addCourse),
             security.checkUserScope.bind(this, security.scope.ADMIN),
             this.addCourse.bind(this)
         );
@@ -29,8 +29,8 @@ class CourseRoute {
         );
         this.router.put(
             '/v1/course/:courseId',
-            validator.validateAjv(schema.updateCourse),
             security.auth.bind(this),
+            validator.validateAjv(schema.updateCourse),
             security.checkUserScope.bind(this, security.scope.ADMIN),
             this.updateCourse.bind(this)
         );
@@ -42,8 +42,8 @@ class CourseRoute {
         );
         this.router.post(
             '/v1/category/course',
-            validator.validateAjv(schema.addCourseCategory),
             security.auth.bind(this),
+            validator.validateAjv(schema.addCourseCategory),
             security.checkUserScope.bind(this, security.scope.ADMIN),
             this.addCourseCategory.bind(this)
         );
@@ -57,8 +57,8 @@ class CourseRoute {
         );
         this.router.put(
             '/v1/category/course/:course_category_id',
-            validator.validateAjv(schema.updateCourseCategory),
             security.auth.bind(this),
+            validator.validateAjv(schema.updateCourseCategory),
             security.checkUserScope.bind(this, security.scope.ADMIN),
             this.updateCourseCategory.bind(this)
         );

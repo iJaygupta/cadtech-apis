@@ -5,6 +5,7 @@ const HttpStatus = require('http-status-codes');
 const mongoose = require("mongoose");
 const resPerPage = process.env.RESPONSE_PER_PAGE || 12;
 
+
 class CourseService {
 
     async addCourse(data) {
@@ -26,6 +27,7 @@ class CourseService {
     async getCourses(query) {
         try {
             let filters = {};
+            let page = parseInt(query.page) || 1;
             let limit, skip, searchKeyword;
             let sort = {};
 
@@ -41,17 +43,49 @@ class CourseService {
                 skip = (page - 1) * resPerPage
             }
             if (searchKeyword) {
-                filters["name"] = { "$regex": new RegExp(searchKeyword) }
+                filters["name"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
             }
-            if (query.course_category_id) {
-                filters.course_category_id = mongoose.Types.ObjectId(query.course_category_id)
+            if (query.slug) {
+                filters["slug"] = query.slug;
             }
 
-            let course = await Course.find(filters)
+            let [countData, data] = await Promise.all([Course.countDocuments(),
+            Course.find(filters)
                 .limit(limit)
                 .skip(skip)
-                .sort(sort);
-            return course;
+                .sort(sort)
+            ]);
+
+            if (data && data.length) {
+                let result = {
+                    "items": data,
+                    "totalRecords": countData,
+                    "totalResult": data.length,
+                    "pagination": !(query.pagination && query.page) ? false : "",
+                }
+                if (query.pagination && query.page) {
+                    result["pagination"] = {
+                        "totalRecords": countData,
+                        "totalPages": Math.ceil(countData / resPerPage),
+                        "currentPage": page,
+                        "resPerPage": resPerPage,
+                        "hasPrevPage": page > 1,
+                        "hasNextPage": page < Math.ceil(countData / resPerPage),
+                        "previousPage": page > 1 ? page - 1 : null,
+                        "nextPage": page < Math.ceil(countData / resPerPage) ? page + 1 : null
+                    }
+                } else {
+                    if (query.limit) {
+                        result["limit"] = limit
+                    }
+                    if (query.skip) {
+                        result["skip"] = skip
+                    }
+                }
+                return result
+            } else {
+                return {}
+            }
         } catch (error) {
             throw error;
         }

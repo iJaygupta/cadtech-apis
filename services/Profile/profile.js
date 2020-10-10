@@ -3,8 +3,10 @@ import APIError from '../../lib/APIError';
 const bcrypt = require("bcryptjs");
 const uploader = require("./../../lib/fileHandler");
 const HttpStatus = require('http-status-codes');
+const resPerPage = process.env.RESPONSE_PER_PAGE || 10;
 
-class CourseService {
+
+class ProfileService {
 
     async getUserAccountDetails(req) {
         try {
@@ -75,6 +77,68 @@ class CourseService {
                     return user.transform();
                 }
             }
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    async getAllUsers(request, response) {
+        try {
+            let page = parseInt(request.query.page) || 1;
+            let limit, skip, searchKeyword;
+            let sort = {};
+            if (request.query.sortBy && request.query.orderBy) {
+                sort[request.query.sortBy] = request.query.orderBy === 'desc' ? -1 : 1
+            }
+            if (!(request.query.pagination && request.query.page)) {
+                limit = parseInt(request.query.limit) || resPerPage;
+                skip = parseInt(request.query.skip) || 0;
+                searchKeyword = request.query.searchKeyword || "";
+            } else {
+                limit = resPerPage;
+                skip = (page - 1) * resPerPage
+            }
+            let populate = {};
+            if (searchKeyword) {
+                populate["firstName"] = { "$regex": new RegExp(searchKeyword) }
+            }
+
+            let countData = await User.count();
+            let data = await User.find(populate)
+                .limit(limit)
+                .skip(skip)
+                .sort(sort)
+            if (data && data.length) {
+                let result = {
+                    "items": data,
+                    "totalRecords": countData,
+                    "totalResult": data.length,
+                    "pagination": !(request.query.pagination && request.query.page) ? false : "",
+                }
+                if (request.query.pagination && request.query.page) {
+                    result["pagination"] = {
+                        "totalRecords": countData,
+                        "totalPages": Math.ceil(countData / resPerPage),
+                        "currentPage": page,
+                        "resPerPage": resPerPage,
+                        "hasPrevPage": page > 1,
+                        "hasNextPage": page < Math.ceil(countData / resPerPage),
+                        "previousPage": page > 1 ? page - 1 : null,
+                        "nextPage": page < Math.ceil(countData / resPerPage) ? page + 1 : null
+                    }
+                } else {
+                    if (request.query.limit) {
+                        result["limit"] = limit
+                    }
+                    if (request.query.skip) {
+                        result["skip"] = skip
+                    }
+                }
+                return result
+            } else {
+                return {}
+            }
         } catch (error) {
             throw error;
         }
@@ -83,4 +147,4 @@ class CourseService {
 
 }
 
-export default new CourseService();
+export default new ProfileService();

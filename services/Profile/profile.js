@@ -101,7 +101,7 @@ class ProfileService {
             }
             let populate = {};
             if (searchKeyword) {
-                populate["firstName"] = { "$regex": new RegExp(searchKeyword) }
+                populate["firstName"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
             }
 
             let countData = await User.count();

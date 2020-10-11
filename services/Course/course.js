@@ -45,8 +45,8 @@ class CourseService {
             if (searchKeyword) {
                 filters["name"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
             }
-            if (query.slug) {
-                filters["slug"] = query.slug;
+            if (query.course_category_id) {
+                filters["course_category_id"] = { $in: [query.course_category_id] };
             }
 
             let [countData, data] = await Promise.all([Course.countDocuments(),
@@ -97,7 +97,13 @@ class CourseService {
             if (!result) {
                 throw new APIError({ message: 'Course does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
             }
-            return result;
+            if (result.course_category_id) {
+                var similarCourse = await Course.find({ course_category_id: { $in: result.course_category_id } }).limit(3);
+            }
+            return {
+                item: result,
+                related: similarCourse || []
+            };
         } catch (error) {
             throw error;
         }

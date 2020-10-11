@@ -5,8 +5,9 @@
         "meta_description": "AC",
         "slug": "civil",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/civil.jpg",
-        "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad845"
+        "course_category_id": [],
+        "duration": "60 hours",
+        "price": 14400
     },
     {
         "name": "Solid Works",
@@ -15,7 +16,9 @@
         "slug": "civil",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/solid-works.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad845"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 14400
     },
     {
         "name": "Catia",
@@ -24,7 +27,9 @@
         "slug": "mech",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/catia.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad849"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
     },
     {
         "name": "Full Stack Development",
@@ -33,7 +38,9 @@
         "slug": "computer",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/computer-science.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad846"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 18400
     },
     {
         "name": "Web Designing",
@@ -42,7 +49,9 @@
         "slug": "computer",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/about.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad846"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 14300
     },
     {
         "name": "Revit",
@@ -51,7 +60,9 @@
         "slug": "civil",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/electronics.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad845"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 14490
     },
     {
         "name": "3DS Max",
@@ -60,7 +71,9 @@
         "slug": "civil",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/about.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad845"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 15699
     },
     {
         "name": "Stadd Pro",
@@ -69,7 +82,9 @@
         "slug": "civil",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/mechanical.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad845"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 14499
     },
     {
         "name": "Robotics",
@@ -78,7 +93,9 @@
         "slug": "electonics",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/micro-processor.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad851"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 16800
     },
     {
         "name": "Ethical Hacking",
@@ -87,7 +104,9 @@
         "slug": "computer",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/ethical-hacking.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad846"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 17400
     },
     {
         "name": "PLC Scada",
@@ -96,7 +115,9 @@
         "slug": "electonics",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/plc.jpeg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad851"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 11900
     },
     {
         "name": "CNC Programming",
@@ -105,6 +126,8 @@
         "slug": "electrical",
         "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/cnc-programming.jpg",
         "total_classes": 12,
-        "course_category_id": "5f5e72322a23021d499ad841"
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
     }
 ]

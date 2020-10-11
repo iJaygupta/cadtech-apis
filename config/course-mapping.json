@@ -1,0 +1,48 @@
+    {
+        "Auto Cad": [
+            "CE",
+            "Trending",
+            "Popular"
+        ],
+        "Solid Works": [
+            "CE",
+            "ME",
+            "Popular"
+        ],
+        "Catia": [
+            "ME"
+        ],
+        "Full Stack Development": [
+            "CSE",
+            "Trending",
+            "Popular"
+        ],
+        "Web Designing": [
+            "CSE",
+            "Trending"
+        ],
+        "Revit": [
+            "CE",
+            "Trending"
+        ],
+        "3DS Max": [
+            "CE"
+        ],
+        "Stadd Pro": [
+            "CE"
+        ],
+        "Robotics": [
+            "ECE",
+            "Popular"
+        ],
+        "Ethical Hacking": [
+            "CSE",
+            "Popular"
+        ],
+        "PLC Scada": [
+            "ECE"
+        ],
+        "CNC Programming": [
+            "EE"
+        ]
+    }

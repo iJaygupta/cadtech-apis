@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Civil Engineering",
+        "meta_title": "CE",
+        "meta_description": "civil",
+        "slug": "civil",
+        "createdAt": "2020-09-13T19:25:38.318Z",
+        "updatedAt": "2020-09-13T19:25:38.318Z",
+        "__v": 0
+    },
+    {
+        "name": "Computer Science & Engineering",
+        "meta_title": "CSE",
+        "meta_description": "CSE",
+        "slug": "computer",
+        "createdAt": "2020-09-13T19:25:38.318Z",
+        "updatedAt": "2020-09-13T19:25:38.318Z",
+        "__v": 0
+    },
+    {
+        "name": "Mechanical Engineering",
+        "meta_title": "ME",
+        "meta_description": "ME",
+        "slug": "mech",
+        "createdAt": "2020-09-13T19:25:38.318Z",
+        "updatedAt": "2020-09-13T19:25:38.318Z",
+        "__v": 0
+    },
+    {
+        "name": "Electical Engineering",
+        "meta_title": "EE",
+        "meta_description": "EE",
+        "slug": "electrical",
+        "createdAt": "2020-09-13T19:25:38.318Z",
+        "updatedAt": "2020-09-13T19:25:38.318Z",
+        "__v": 0
+    },
+    {
+        "name": "Electronics & Communication Engineering",
+        "meta_title": "ECE",
+        "meta_description": "ECE",
+        "slug": "electonics",
+        "createdAt": "2020-09-13T19:25:38.318Z",
+        "updatedAt": "2020-09-13T19:25:38.318Z",
+        "__v": 0
+    },
+    {
+        "name": "Popular",
+        "meta_title": "Popular",
+        "meta_description": "popular",
+        "slug": "popular",
+        "createdAt": "2020-09-13T19:25:38.318Z",
+        "updatedAt": "2020-09-13T19:25:38.318Z",
+        "__v": 0
+    },
+    {
+        "name": "Trending Technologies",
+        "meta_title": "Trending",
+        "meta_description": "Trending",
+        "slug": "trending",
+        "createdAt": "2020-09-13T19:25:38.318Z",
+        "updatedAt": "2020-09-13T19:25:38.318Z",
+        "__v": 0
+    }
+]

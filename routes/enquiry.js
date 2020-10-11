@@ -150,7 +150,7 @@ class EnquiryRoute {
     async downloadStudentCertificate(req, res, next) {
         try {
             const $response = await EnquiryService.downloadStudentCertificate(req.body);
-            sendSuccess(res, HttpStatus.OK, 2035, $response);
+            sendSuccess(res, HttpStatus.OK, 2043, $response);
         } catch (error) {
             sendError(res, error);
         }
@@ -158,7 +158,7 @@ class EnquiryRoute {
     async uploadCsv(req, res, next) {
         try {
             const $response = await EnquiryService.uploadCsv(req, res);
-            sendSuccess(res, HttpStatus.OK, 2036, $response);
+            sendSuccess(res, HttpStatus.OK, 2044, $response);
         } catch (error) {
             sendError(res, error);
         }

@@ -79,7 +79,7 @@ class CourseRoute {
     async getAllUsers(req, res, next) {
         try {
             const $response = await ProfileService.getAllUsers(req, res);
-            sendSuccess(res, HttpStatus.OK, 2043, $response);
+            sendSuccess(res, HttpStatus.OK, 2045, $response);
         } catch (error) {
             sendError(res, error);
         }

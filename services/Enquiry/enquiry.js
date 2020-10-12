@@ -199,6 +199,15 @@ class EnquiryService {
         })
         return bulkWriteQuery;
     }
+
+    async getBulkData() {
+        try {
+            let bulkData = await StudentCertificates.find({});
+            return bulkData;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default new EnquiryService();

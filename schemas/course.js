@@ -31,7 +31,7 @@ module.exports = {
             "slug": { "type": ["string"] },
             "filename": { "type": ["string"] },
             "total_classes": { "type": ["string"] },
-            "course_category_id": { "type": ["string"] }
+            "course_category_id": { "type": ["array"] }
         },
         "additionalProperties": false,
     },
@@ -44,7 +44,7 @@ module.exports = {
             "slug": { "type": ["string"] },
             "filename": { "type": ["string"] },
             "total_classes": { "type": ["string"] },
-            "course_category_id": { "type": ["string"] }
+            "course_category_id": { "type": ["array"] }
         },
         "additionalProperties": false,
     },

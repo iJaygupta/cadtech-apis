@@ -4,3 +4,4 @@ node_modules/*
 /uploads
 logs/*
 .vscode
+npm-shrinkwrap.json

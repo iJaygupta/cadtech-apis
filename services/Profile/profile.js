@@ -101,7 +101,7 @@ class ProfileService {
             }
             let populate = {};
             if (searchKeyword) {
-                populate["name"] = { "$regex": new RegExp(searchKeyword) }
+                populate["firstName"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
             }
 
             let countData = await User.count();
@@ -137,7 +137,7 @@ class ProfileService {
                 }
                 return result
             } else {
-                throw new APIError({ error: true, message: 'No User Found', status: HttpStatus.NOT_FOUND });
+                return {}
             }
         } catch (error) {
             throw error;

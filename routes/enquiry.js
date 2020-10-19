@@ -169,7 +169,7 @@ class EnquiryRoute {
     }
     async getBulkData(req, res, next) {
         try {
-            const $response = await EnquiryService.getBulkData(req.query);
+            const $response = await EnquiryService.getBulkData(req, res);
             sendSuccess(res, HttpStatus.OK, 2044, $response);
         } catch (error) {
             sendError(res, error);

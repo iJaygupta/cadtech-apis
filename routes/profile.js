@@ -39,6 +39,12 @@ class CourseRoute {
             validator.validateAjv(schema.updateUserPassword),
             this.updateUserPassword.bind(this)
         );
+        this.router.put(
+            '/v1/profile/status',
+            //security.auth.bind(this),
+            validator.validateAjv(schema.updateUserStatus),
+            this.updateUserStatus.bind(this)
+        );
     }
 
     async getUserAccountDetails(req, res, next) {
@@ -76,6 +82,7 @@ class CourseRoute {
             sendError(res, error);
         }
     }
+
     async getAllUsers(req, res, next) {
         try {
             const $response = await ProfileService.getAllUsers(req, res);
@@ -85,6 +92,14 @@ class CourseRoute {
         }
     }
 
+    async updateUserStatus(req, res, next) {
+        try {
+            const $response = await ProfileService.updateUserStatus(req.body);
+            sendSuccess(res, HttpStatus.OK, 2046, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
 }
 
 export default CourseRoute;

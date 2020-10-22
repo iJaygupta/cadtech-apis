@@ -144,6 +144,27 @@ class ProfileService {
         }
     }
 
+ 
+    async updateUserStatus( data) {
+        try {
+            let status = {
+                status: data.status
+            }
+            let user = await User.findByIdAndUpdate(
+                data.userId,
+                {
+                    $set: status
+                },
+                {
+                    new: true
+                }
+            );
+            // user = user.transform();
+            return user;
+        } catch (error) {
+            throw error
+        }
+    }
 
 }
 

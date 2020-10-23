@@ -17,6 +17,11 @@ class CourseRoute {
             security.auth.bind(this),
             this.getUserAccountDetails.bind(this)
         );
+        this.router.get(
+            '/v1/profile/all',
+            security.auth.bind(this),
+            this.getAllUsers.bind(this)
+        );
         this.router.put(
             '/v1/profile',
             security.auth.bind(this),
@@ -33,6 +38,12 @@ class CourseRoute {
             security.auth.bind(this),
             validator.validateAjv(schema.updateUserPassword),
             this.updateUserPassword.bind(this)
+        );
+        this.router.put(
+            '/v1/profile/status',
+            //security.auth.bind(this),
+            validator.validateAjv(schema.updateUserStatus),
+            this.updateUserStatus.bind(this)
         );
     }
 
@@ -72,6 +83,23 @@ class CourseRoute {
         }
     }
 
+    async getAllUsers(req, res, next) {
+        try {
+            const $response = await ProfileService.getAllUsers(req, res);
+            sendSuccess(res, HttpStatus.OK, 2045, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    async updateUserStatus(req, res, next) {
+        try {
+            const $response = await ProfileService.updateUserStatus(req.body);
+            sendSuccess(res, HttpStatus.OK, 2046, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
 }
 
 export default CourseRoute;

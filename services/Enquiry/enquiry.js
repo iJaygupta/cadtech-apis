@@ -11,6 +11,7 @@ const convertHtmlToPdf = require('../../lib/pdfConverter').convertHtmlToPdf;
 var rimraf = require('rimraf');
 var uploader = require("./../../lib/fileHandler");
 var XLSX = require('xlsx');
+const resPerPage = process.env.RESPONSE_PER_PAGE || 4;
 
 
 class EnquiryService {
@@ -198,6 +199,67 @@ class EnquiryService {
             }
         })
         return bulkWriteQuery;
+    }
+
+    async getBulkData(request) {
+        try {
+            let page = parseInt(request.query.page) || 1;
+            let limit, skip, searchKeyword;
+            let sort = {};
+            if (request.query.sortBy && request.query.orderBy) {
+                sort[request.query.sortBy] = request.query.orderBy === 'desc' ? -1 : 1
+            }
+            if (!(request.query.pagination && request.query.page)) {
+                limit = parseInt(request.query.limit) || resPerPage;
+                skip = parseInt(request.query.skip) || 0;
+                searchKeyword = request.query.searchKeyword || "";
+            } else {
+                limit = resPerPage;
+                skip = (page - 1) * resPerPage
+            }
+            let populate = {};
+            if (searchKeyword) {
+                populate["fullName"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
+            }
+
+            let countData = await StudentCertificates.count();
+            let data = await StudentCertificates.find(populate)
+                .limit(limit)
+                .skip(skip)
+                .sort(sort)
+            if (data && data.length) {
+                let result = {
+                    "items": data,
+                    "totalRecords": countData,
+                    "totalResult": data.length,
+                    "pagination": !(request.query.pagination && request.query.page) ? false : "",
+                }
+                if (request.query.pagination && request.query.page) {
+                    result["pagination"] = {
+                        "totalRecords": countData,
+                        "totalPages": Math.ceil(countData / resPerPage),
+                        "currentPage": page,
+                        "resPerPage": resPerPage,
+                        "hasPrevPage": page > 1,
+                        "hasNextPage": page < Math.ceil(countData / resPerPage),
+                        "previousPage": page > 1 ? page - 1 : null,
+                        "nextPage": page < Math.ceil(countData / resPerPage) ? page + 1 : null
+                    }
+                } else {
+                    if (request.query.limit) {
+                        result["limit"] = limit
+                    }
+                    if (request.query.skip) {
+                        result["skip"] = skip
+                    }
+                }
+                return result
+            } else {
+                return {}
+            }
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

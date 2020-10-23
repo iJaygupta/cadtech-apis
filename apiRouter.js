@@ -3,6 +3,7 @@ import AuthRoute from './routes/auth';
 import ProfileRoute from './routes/profile';
 import CourseRoute from './routes/course';
 import EnquiryRoute from './routes/enquiry';
+import OrderRoute from './routes/order';
 
 
 
@@ -13,6 +14,7 @@ new AuthRoute(apiRouter);
 new ProfileRoute(apiRouter);
 new CourseRoute(apiRouter);
 new EnquiryRoute(apiRouter);
+new OrderRoute(apiRouter);
 
 
 

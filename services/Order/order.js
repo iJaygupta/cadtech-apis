@@ -20,7 +20,7 @@ class OrderService {
         }
     }
 
-    async getOrder(query) {
+    async getAllOrder(query) {
         try {
             let filters = {};
             let page = parseInt(query.page) || 1;

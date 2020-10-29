@@ -193,7 +193,7 @@ class EnquiryService {
             return {
                 updateOne: {
                     "filter": { registration_id: el.registration_id },
-                    "update": { $setOnInsert: el },
+                    "update": { $set: el },
                     "upsert": true
                 }
             }

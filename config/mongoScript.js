@@ -1,5 +1,6 @@
 const LookUpData = require('./lookUp.json');
 const courseData = require('./course.json');
+const servicesData = require('./service.json');
 const courseCategoriesData = require('./courseCategories.json');
 const courseMapping = require('./course-mapping.json');
 const mongoose = require("mongoose");
@@ -13,6 +14,8 @@ export function insertLookUpData(db) {
   db.collection('commons').insertMany([LookUpData]);
   db.collection('coursecategories').insertMany(courseCategoriesData);
   db.collection('courses').insertMany(courseData);
+  db.collection('service').insertMany(servicesData);
+  db.collection('service').deleteMany();
 
 }
 

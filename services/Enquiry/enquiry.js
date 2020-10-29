@@ -27,10 +27,64 @@ class EnquiryService {
             throw error;
         }
     }
-    async getEnquiry() {
+    async getAllEnquiry(query) {
         try {
-            let enquiry = await Enquiry.find({});
-            return enquiry;
+            let filters = {};
+            let page = parseInt(query.page) || 1;
+            let limit, skip, searchKeyword;
+            let sort = {};
+
+            if (query.sortBy && query.orderBy) {
+                sort[query.sortBy] = query.orderBy === 'desc' ? -1 : 1
+            }
+            if (!(query.pagination && query.page)) {
+                limit = parseInt(query.limit) || resPerPage;
+                skip = parseInt(query.skip) || 0;
+                searchKeyword = query.searchKeyword || "";
+            } else {
+                limit = resPerPage;
+                skip = (page - 1) * resPerPage
+            }
+            if (searchKeyword) {
+                filters["name"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
+            }
+            let [countData, data] = await Promise.all([Enquiry.countDocuments(),
+            Enquiry.find(filters)
+                .limit(limit)
+                .skip(skip)
+                .sort(sort)
+            ]);
+
+            if (data && data.length) {
+                let result = {
+                    "items": data,
+                    "totalRecords": countData,
+                    "totalResult": data.length,
+                    "pagination": !(query.pagination && query.page) ? false : "",
+                }
+                if (query.pagination && query.page) {
+                    result["pagination"] = {
+                        "totalRecords": countData,
+                        "totalPages": Math.ceil(countData / resPerPage),
+                        "currentPage": page,
+                        "resPerPage": resPerPage,
+                        "hasPrevPage": page > 1,
+                        "hasNextPage": page < Math.ceil(countData / resPerPage),
+                        "previousPage": page > 1 ? page - 1 : null,
+                        "nextPage": page < Math.ceil(countData / resPerPage) ? page + 1 : null
+                    }
+                } else {
+                    if (query.limit) {
+                        result["limit"] = limit
+                    }
+                    if (query.skip) {
+                        result["skip"] = skip
+                    }
+                }
+                return result
+            } else {
+                return {}
+            }
         } catch (error) {
             throw error;
         }

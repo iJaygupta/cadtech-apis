@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const serviceSchema = new mongoose.Schema({
+const guideSchema = new mongoose.Schema({
     name : String,
     meta_title: String,
     meta_description: String,
@@ -12,6 +12,6 @@ const serviceSchema = new mongoose.Schema({
     timestemp:true
 });
 
-const service = mongoose.model('service', serviceSchema);
+const guide = mongoose.model('guide', guideSchema);
 
-export default service;
+export default guide;

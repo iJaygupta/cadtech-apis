@@ -9,8 +9,7 @@ const courseSchema = new mongoose.Schema({
     filename: String,
     total_classes: Number,
     course_category_id:
-        { type: mongoose.Schema.Types.ObjectId, ref: 'coursecategory', required: true }
-
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'coursecategory' }]
 },
     {
         timestamps: true

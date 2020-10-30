@@ -13,13 +13,20 @@ module.exports = {
     },
     "additionalProperties": false,
   },
-
   updateUserPassword: {
     "properties": {
       "oldPassword": { "type": ["string"], "minLength": 8 },
       "password": { "type": ["string"], "minLength": 8 },
     },
     "required": ["password", "oldPassword"],
+    "additionalProperties": false,
+  },
+  updateUserStatus:{
+    "properties": {
+      "status": { "type": ["number"] },
+      "userId": { "type": ["string"] },
+    },
+    "required": ["userId", "status"],
     "additionalProperties": false,
   },
 

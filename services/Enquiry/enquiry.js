@@ -11,8 +11,7 @@ const convertHtmlToPdf = require('../../lib/pdfConverter').convertHtmlToPdf;
 var rimraf = require('rimraf');
 var uploader = require("./../../lib/fileHandler");
 var XLSX = require('xlsx');
-const resPerPage = process.env.RESPONSE_PER_PAGE || 10;
-
+const resPerPage = process.env.RESPONSE_PER_PAGE || 4;
 
 
 class EnquiryService {
@@ -194,7 +193,7 @@ class EnquiryService {
             return {
                 updateOne: {
                     "filter": { registration_id: el.registration_id },
-                    "update": { $setOnInsert: el },
+                    "update": { $set: el },
                     "upsert": true
                 }
             }
@@ -202,7 +201,7 @@ class EnquiryService {
         return bulkWriteQuery;
     }
 
-    async getBulkData(request, response) {
+    async getBulkData(request) {
         try {
             let page = parseInt(request.query.page) || 1;
             let limit, skip, searchKeyword;
@@ -220,7 +219,7 @@ class EnquiryService {
             }
             let populate = {};
             if (searchKeyword) {
-                populate["registration_id"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
+                populate["fullName"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
             }
 
             let countData = await StudentCertificates.count();

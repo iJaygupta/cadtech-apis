@@ -17,12 +17,9 @@ class EnquiryService {
 
     async addEnquiry(data) {
         try {
-            const { email, query, message } = data;
 
             let enquiry = new ContactUs({
-                email,
-                query,
-                message,
+                ...data,
                 slug: 'enquiry'
             });
             enquiry = await enquiry.save();

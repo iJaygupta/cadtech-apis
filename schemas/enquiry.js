@@ -3,9 +3,11 @@ module.exports = {
     "properties": {
       "email": { "type": ["string"] },
       "message": { "type": ["string"] },
-      "query": { "type": ["string"] },
+      "course": { "type": ["string"] },
       "slug": { "type": ["string"] },
+      "mobile": { "type": ["string"] },
     },
+    "required": ["course", "mobile"],
     "additionalProperties": false,
   },
 

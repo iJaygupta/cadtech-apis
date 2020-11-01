@@ -5,7 +5,10 @@ var ContactusSchema = new mongoose.Schema({
     name: { type: String },
     subject: { type: String },
     message: { type: String },
-    slug: { type: String, default: "contact_us" }
+    slug: { type: String, default: "contact_us" },
+    course: { type: String },
+    mobile: { type: String },
+
 },
     {
         timestamps: true

@@ -4,7 +4,6 @@ import ContactUs from '../../models/ContactUs';
 import StudentCertificates from '../../models/StudentCertificates';
 import Team from '../../models/Team';
 import Common from '../../models/Common';
-import Enquiry from '../../models/Enquiry';
 const HttpStatus = require('http-status-codes');
 const helpers = require('../../common/utils');
 const convertHtmlToPdf = require('../../lib/pdfConverter').convertHtmlToPdf;
@@ -18,8 +17,13 @@ class EnquiryService {
 
     async addEnquiry(data) {
         try {
-            let enquiry = new Enquiry({
-                ...data
+            const { email, query, message } = data;
+
+            let enquiry = new ContactUs({
+                email,
+                query,
+                message,
+                slug: 'enquiry'
             });
             enquiry = await enquiry.save();
             return enquiry;
@@ -48,8 +52,8 @@ class EnquiryService {
             if (searchKeyword) {
                 filters["name"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
             }
-            let [countData, data] = await Promise.all([Enquiry.countDocuments(),
-            Enquiry.find(filters)
+            let [countData, data] = await Promise.all([ContactUs.countDocuments(),
+            ContactUs.find(filters)
                 .limit(limit)
                 .skip(skip)
                 .sort(sort)

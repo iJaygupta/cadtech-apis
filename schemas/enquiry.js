@@ -2,7 +2,9 @@ module.exports = {
   addEnquiry: {
     "properties": {
       "email": { "type": ["string"] },
+      "message": { "type": ["string"] },
       "query": { "type": ["string"] },
+      "slug": { "type": ["string"] },
     },
     "additionalProperties": false,
   },

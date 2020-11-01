@@ -38,9 +38,10 @@ module.exports = {
       "Full Name": { "type": ["string"] },
       "Course": { "type": ["string"] },
       "Grade": { "type": ["string"] },
-      "Date": { "type": ["number"] },
+      "Date": { "type": ["string"] },
+      "Date Of Birth": { "type": ["string"] },
     },
-    "required": ["Registration Id", "Full Name", "Course", "Grade", "Date"],
+    "required": ["Registration Id", "Full Name", "Course", "Grade", "Date", "Date Of Birth"],
   }
 
 }

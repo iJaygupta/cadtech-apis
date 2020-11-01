@@ -3,7 +3,9 @@ const emailService = require('../lib/mailer');
 import APIError from '../lib/APIError';
 const HttpStatus = require('http-status-codes');
 const Ajv = require("ajv");
-const ajv = new Ajv();
+const ajv = new Ajv({allErrors: true, jsonPointers: true});
+// Ajv options allErrors and jsonPointers are required
+require('ajv-errors')(ajv /*, {singleError: true} */);
 const schema = require("../schemas/enquiry").bulkUpload;
 
 

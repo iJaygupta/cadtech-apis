@@ -48,6 +48,7 @@ exports.prepareCsvData = function (bulkCsvData) {
       obj.grade = data["Grade"];
       obj.course = data["Course"];
       obj.date = new Date(data["Date"]);
+      obj.dob = new Date(data["Date Of Birth"]);
       obj.isActive = data["Active"] ? true : false;
       return obj;
     }

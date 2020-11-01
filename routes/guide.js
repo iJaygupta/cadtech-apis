@@ -32,7 +32,7 @@ class GuideRoute {
         );
         this.router.get(
             '/v1/guide/:id',
-            this.getGuideByID.bind(this)
+            this.getSingleGuide.bind(this)
         );
         this.router.put(
             '/v1/guide/:guide_id',
@@ -41,11 +41,11 @@ class GuideRoute {
             security.checkUserScope.bind(this, security.scope.ADMIN),
             this.updateGuide.bind(this)
         )
-        
+
     }
     async getAllGuide(req, res, next) {
         try {
-            const $response = await GuideService.getAllGuide(req.body);
+            const $response = await GuideService.getAllGuide();
             sendSuccess(res, HttpStatus.OK, 2048, $response);
         } catch (error) {
             sendError(res, error);
@@ -67,7 +67,7 @@ class GuideRoute {
             sendError(res, error);
         }
     }
-    async getGuideByID(req, res, next) {
+    async getSingleGuide(req, res, next) {
         try {
             const $response = await GuideService.getSingleGuide(req.params.id);
             sendSuccess(res, HttpStatus.OK, 2051, $response);
@@ -76,17 +76,17 @@ class GuideRoute {
         }
     }
     async updateGuide(req, res, next) {
-        try{
+        try {
             let guideID = req.params.guide_id;
-          const $response = await GuideService.updateGuide(guideID, req.body);
-          console.log(req.body);
-          sendSuccess(res, HttpStatus.OK, 2052,$response);
+            const $response = await GuideService.updateGuide(guideID, req.body);
+            console.log(req.body);
+            sendSuccess(res, HttpStatus.OK, 2052, $response);
         }
-        catch(error){
-           sendError(res,error);
+        catch (error) {
+            sendError(res, error);
         }
-        }
-        
+    }
+
 }
 
 export default GuideRoute;

@@ -52,7 +52,7 @@ class GuideService {
             let result = await Guide.findOneAndUpdate(
                 guide_id,
                 {
-                    $set:data
+                    $set: data
                 },
                 {
                     new: true

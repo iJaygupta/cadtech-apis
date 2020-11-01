@@ -66,7 +66,7 @@ class EnquiryRoute {
             this.uploadCsv.bind(this)
         );
         this.router.get(
-            '/v1/enquiry/certificates/data/upload',
+            '/v1/enquiry/certificates/data',
             this.getBulkData.bind(this)
         );
     }

@@ -46,6 +46,26 @@ class GuideService {
             throw error;
         }
     }
+
+    async updateGuide(guide_id, data) {
+        try {
+            let result = await Guide.findOneAndUpdate(
+                guide_id,
+                {
+                    $set:data
+                },
+                {
+                    new: true
+                }
+            );
+            if (!result) {
+                throw new APIError({ message: 'Service does not exist', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default new GuideService();

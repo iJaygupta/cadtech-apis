@@ -1,3 +1,4 @@
+import httpStatus from 'http-status';
 import security from '../lib/security';
 import GuideService from '../services/Guide/guide';
 const { sendSuccess, sendError } = require('../lib/handleResponse');
@@ -31,8 +32,16 @@ class GuideRoute {
         );
         this.router.get(
             '/v1/guide/:id',
-            this.getSingleGuide.bind(this)
+            this.getGuideByID.bind(this)
         );
+        this.router.put(
+            '/v1/guide/:guide_id',
+            security.auth.bind(this),
+            validator.validateAjv(schema.updateGuide),
+            security.checkUserScope.bind(this, security.scope.ADMIN),
+            this.updateGuide.bind(this)
+        )
+        
     }
     async getAllGuide(req, res, next) {
         try {
@@ -58,7 +67,7 @@ class GuideRoute {
             sendError(res, error);
         }
     }
-    async getSingleGuide(req, res, next) {
+    async getGuideByID(req, res, next) {
         try {
             const $response = await GuideService.getSingleGuide(req.params.id);
             sendSuccess(res, HttpStatus.OK, 2051, $response);
@@ -66,6 +75,18 @@ class GuideRoute {
             sendError(res, error);
         }
     }
+    async updateGuide(req, res, next) {
+        try{
+            let guideID = req.params.guide_id;
+          const $response = await GuideService.updateGuide(guideID, req.body);
+          console.log(req.body);
+          sendSuccess(res, HttpStatus.OK, 2052,$response);
+        }
+        catch(error){
+           sendError(res,error);
+        }
+        }
+        
 }
 
 export default GuideRoute;

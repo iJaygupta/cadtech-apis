@@ -41,13 +41,13 @@ class OrderService {
             if (searchKeyword) {
                 filters["name"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
             }
-            let [countData, data] = await Promise.all([Order.countDocuments(),
-            Order.find(filters)
+            let countData = await Order.count();
+            let data = await Order.find(filters)
+                .populate("customer_id", "firstName")
+                .populate("productId", "name")
                 .limit(limit)
                 .skip(skip)
                 .sort(sort)
-            ]);
-
             if (data && data.length) {
                 let result = {
                     "items": data,

@@ -18,7 +18,7 @@ class OrdersRoute {
         this.router.get(
             '/v1/order',
             security.auth.bind(this),
-            this.getOrder.bind(this)
+            this.getAllOrder.bind(this)
         );
         this.router.get(
             '/v1/order/:orderId',
@@ -74,9 +74,9 @@ class OrdersRoute {
             sendError(res, error);
         }
     }
-    async getOrder(req, res, next) {
+    async getAllOrder(req, res, next) {
         try {
-            const $response = await OrdersService.getOrder(req.query);
+            const $response = await OrdersService.getAllOrder(req.query);
             sendSuccess(res, HttpStatus.OK, 2036, $response);
         } catch (error) {
             sendError(res, error);

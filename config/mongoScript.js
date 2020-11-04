@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 
 
 export function insertLookUpData(db) {
+
   db.collection('commons').deleteMany();
   db.collection('courses').deleteMany();
   db.collection('guides').deleteMany();
@@ -16,7 +17,6 @@ export function insertLookUpData(db) {
   db.collection('coursecategories').insertMany(courseCategoriesData);
   db.collection('courses').insertMany(courseData);
   db.collection('guides').insertMany(guideData);
-
 }
 
 

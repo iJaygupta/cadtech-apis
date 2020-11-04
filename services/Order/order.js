@@ -4,6 +4,7 @@ import Order from '../../models/Order';
 import Cart from '../../models/Cart';
 const HttpStatus = require('http-status-codes');
 const helpers = require('../../common/utils');
+const resPerPage = process.env.RESPONSE_PER_PAGE || 15;
 
 class OrderService {
     async createOrder(payload, data) {
@@ -19,10 +20,64 @@ class OrderService {
         }
     }
 
-    async getOrder() {
+    async getAllOrder(query) {
         try {
-            let order = await Order.find({});
-            return order;
+            let filters = {};
+            let page = parseInt(query.page) || 1;
+            let limit, skip, searchKeyword;
+            let sort = {};
+
+            if (query.sortBy && query.orderBy) {
+                sort[query.sortBy] = query.orderBy === 'desc' ? -1 : 1
+            }
+            if (!(query.pagination && query.page)) {
+                limit = parseInt(query.limit) || resPerPage;
+                skip = parseInt(query.skip) || 0;
+                searchKeyword = query.searchKeyword || "";
+            } else {
+                limit = resPerPage;
+                skip = (page - 1) * resPerPage
+            }
+            if (searchKeyword) {
+                filters["name"] = { "$regex": new RegExp(searchKeyword), '$options': 'i' }
+            }
+            let countData = await Order.count();
+            let data = await Order.find(filters)
+                .populate("customer_id", "firstName")
+                .populate("productId", "name")
+                .limit(limit)
+                .skip(skip)
+                .sort(sort)
+            if (data && data.length) {
+                let result = {
+                    "items": data,
+                    "totalRecords": countData,
+                    "totalResult": data.length,
+                    "pagination": !(query.pagination && query.page) ? false : "",
+                }
+                if (query.pagination && query.page) {
+                    result["pagination"] = {
+                        "totalRecords": countData,
+                        "totalPages": Math.ceil(countData / resPerPage),
+                        "currentPage": page,
+                        "resPerPage": resPerPage,
+                        "hasPrevPage": page > 1,
+                        "hasNextPage": page < Math.ceil(countData / resPerPage),
+                        "previousPage": page > 1 ? page - 1 : null,
+                        "nextPage": page < Math.ceil(countData / resPerPage) ? page + 1 : null
+                    }
+                } else {
+                    if (query.limit) {
+                        result["limit"] = limit
+                    }
+                    if (query.skip) {
+                        result["skip"] = skip
+                    }
+                }
+                return result
+            } else {
+                return {}
+            }
         } catch (error) {
             throw error;
         }

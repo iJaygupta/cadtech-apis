@@ -63,16 +63,16 @@ class ProfileService {
 
     async updateUserPassword(payload, data) {
         try {
-            let { oldPassword, password } = data
+            let { oldPassword, confirmPassword } = data;
             let user = await User.findById({ _id: payload._id });
             if (!user) {
                 throw new APIError({ error: true, message: 'Unauthorized', status: HttpStatus.UNAUTHORIZED });
             } else {
                 const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
                 if (!isPasswordMatch) {
-                    throw new APIError({ error: true, message: 'Invalid Credentials', status: HttpStatus.UNAUTHORIZED });
+                    throw new APIError({ error: true, message: 'Invalid Old Password', status: HttpStatus.UNAUTHORIZED });
                 } else {
-                    let hash = bcrypt.hashSync(password);
+                    let hash = bcrypt.hashSync(confirmPassword);
                     await User.updateOne({ _id: payload._id }, { $set: { 'password': hash } });
                     return user.transform();
                 }
@@ -144,8 +144,8 @@ class ProfileService {
         }
     }
 
- 
-    async updateUserStatus( data) {
+
+    async updateUserStatus(data) {
         try {
             let status = {
                 status: data.status

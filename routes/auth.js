@@ -11,6 +11,10 @@ class AuthRoute {
     }
 
     registerRoutes() {
+        this.router.get(
+            '/v1/auth/google',
+            this.googleLogin.bind(this)
+        );
         this.router.post(
             '/v1/auth/register',
             validator.validateAjv(schema.register),
@@ -51,6 +55,15 @@ class AuthRoute {
             '/v1/auth/confirm-forgot-password/:token',
             this.confirmForgotPassword.bind(this)
         );
+    }
+
+    async googleLogin(req, res, next) {
+        try {
+            const $response = await AuthService.googleLogin(req.query);
+            sendSuccess(res, HttpStatus.OK, 2001, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
     }
 
     async register(req, res, next) {

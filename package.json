@@ -20,6 +20,7 @@
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "googleapis": "^62.0.0",
     "helmet": "^3.23.3",
     "html-pdf": "^2.2.0",
     "http-status": "^1.4.2",

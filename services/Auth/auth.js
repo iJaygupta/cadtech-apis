@@ -9,10 +9,21 @@ const util = require('../../common/auth');
 const emailService = require('../../lib/mailer');
 const smsService = require('../../lib/sms');
 const helpers = require('../../common/utils');
+const socialLoginService = require('../../common/social-login');
+
 
 
 
 class AuthService {
+
+    async googleLogin(data) {
+        try {
+            let userData = await socialLoginService.getToken(data.code);
+            return userData;
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async register(data) {
         try {

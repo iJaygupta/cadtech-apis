@@ -24,10 +24,7 @@ module.exports = {
     addToCart: {
         "properties": {
             "product_id": { "type": ["string", "array"] },
-            "coupon": { "type": ["string"] },
-            "discount_total": { "type": ["number"] },
-            "subtotal": { "type": ["number"] },
-
+            "uuid": { "type": ["string"] }
         },
         "additionalProperties": false,
     },

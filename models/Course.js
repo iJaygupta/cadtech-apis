@@ -8,6 +8,7 @@ const courseSchema = new mongoose.Schema({
     slug: String,
     filename: String,
     total_classes: Number,
+    price: Number,
     course_category_id:
         [{ type: mongoose.Schema.Types.ObjectId, ref: 'coursecategory' }]
 },

@@ -7,6 +7,90 @@ const helpers = require('../../common/utils');
 const resPerPage = process.env.RESPONSE_PER_PAGE || 15;
 
 class OrderService {
+
+    async addToCart(data) {
+        let uuid = data.uuid;
+        try {
+            let result = await Cart.updateOne(
+                { uuid },
+                {
+                    $addToSet: { "product_id": data.product_id }
+                },
+                {
+                    upsert: true
+                }
+            );
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getCart() {
+        try {
+            let cart = await Cart.find({});
+            return cart;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getSingleCart(cartId) {
+        try {
+            let result = await Cart.findById(cartId);
+            if (!result) {
+                throw new APIError({ message: 'Cart does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updateCart(cartId, data) {
+        try {
+            let result = await Cart.findByIdAndUpdate(
+                cartId,
+                {
+                    $set: data
+                },
+                {
+                    new: true
+                }
+            );
+            if (!result) {
+                throw new APIError({ message: 'Cart does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteCart(cartId) {
+        try {
+            let result = await Cart.findByIdAndDelete(cartId);
+            if (!result) {
+                throw new APIError({ message: 'Cart does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getCartProducts(uuid) {
+        try {
+            let result = await Cart.findOne({ uuid }).populate('product_id');
+            if (!result) {
+                throw new APIError({ message: 'Cart does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async createOrder(payload, data) {
         try {
             let order = new Order({
@@ -129,70 +213,7 @@ class OrderService {
         }
     }
 
-    async addToCart(data) {
-        try {
-            let cart = new Cart({
-                ...data,
-            });
-            cart = await cart.save();
-            return cart;
-        } catch (error) {
-            throw error;
-        }
-    }
 
-    async getCart() {
-        try {
-            let cart = await Cart.find({});
-            return cart;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async getSingleCart(cartId) {
-        try {
-            let result = await Cart.findById(cartId);
-            if (!result) {
-                throw new APIError({ message: 'Cart does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
-            }
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async updateCart(cartId, data) {
-        try {
-            let result = await Cart.findByIdAndUpdate(
-                cartId,
-                {
-                    $set: data
-                },
-                {
-                    new: true
-                }
-            );
-            if (!result) {
-                throw new APIError({ message: 'Cart does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
-            }
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async deleteCart(cartId) {
-        try {
-            let result = await Cart.findByIdAndDelete(cartId);
-            if (!result) {
-                throw new APIError({ message: 'Cart does not exists', status: HttpStatus.UNPROCESSABLE_ENTITY });
-            }
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
 
 
 }

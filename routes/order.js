@@ -16,6 +16,32 @@ class OrdersRoute {
 
     registerRoutes() {
         this.router.get(
+            '/v1/cart',
+            this.getCart.bind(this)
+        );
+        this.router.get(
+            '/v1/cart/:cartId',
+            this.getSingleCart.bind(this)
+        );
+        this.router.post(
+            '/v1/cart',
+            validator.validateAjv(schema.addToCart),
+            this.addToCart.bind(this)
+        );
+        this.router.put(
+            '/v1/cart/:cartId',
+            validator.validateAjv(schema.updateCart),
+            this.updateCart.bind(this)
+        );
+        this.router.delete(
+            '/v1/cart/:cartId',
+            this.deleteCart.bind(this)
+        );
+        this.router.get(
+            '/v1/cart/products/:uuid',
+            this.getCartProducts.bind(this)
+        );
+        this.router.get(
             '/v1/order',
             security.auth.bind(this),
             this.getAllOrder.bind(this)
@@ -42,69 +68,7 @@ class OrdersRoute {
             security.auth.bind(this),
             this.deleteOrder.bind(this)
         );
-        this.router.get(
-            '/v1/cart',
-            this.getCart.bind(this)
-        );
-        this.router.get(
-            '/v1/cart/:cartId',
-            this.getSingleCart.bind(this)
-        );
-        this.router.post(
-            '/v1/cart',
-            validator.validateAjv(schema.addToCart),
-            this.addToCart.bind(this)
-        );
-        this.router.put(
-            '/v1/cart/:cartId',
-            validator.validateAjv(schema.updateCart),
-            this.updateCart.bind(this)
-        );
-        this.router.delete(
-            '/v1/cart/:cartId',
-            this.deleteCart.bind(this)
-        );
 
-    }
-    async createOrder(req, res, next) {
-        try {
-            const $response = await OrdersService.createOrder(req.user, req.body);
-            sendSuccess(res, HttpStatus.OK, 2035, $response);
-        } catch (error) {
-            sendError(res, error);
-        }
-    }
-    async getAllOrder(req, res, next) {
-        try {
-            const $response = await OrdersService.getAllOrder(req.query);
-            sendSuccess(res, HttpStatus.OK, 2036, $response);
-        } catch (error) {
-            sendError(res, error);
-        }
-    }
-    async getSingleOrder(req, res, next) {
-        try {
-            const $response = await OrdersService.getSingleOrder(req.params.orderId);
-            sendSuccess(res, HttpStatus.OK, 2036, $response);
-        } catch (error) {
-            sendError(res, error);
-        }
-    }
-    async updateOrder(req, res, next) {
-        try {
-            const $response = await OrdersService.updateOrder(req.params.orderId, req.body);
-            sendSuccess(res, HttpStatus.OK, 2037, $response);
-        } catch (error) {
-            sendError(res, error);
-        }
-    }
-    async deleteOrder(req, res, next) {
-        try {
-            const $response = await OrdersService.deleteOrder(req.params.orderId);
-            sendSuccess(res, HttpStatus.OK, 2038, $response);
-        } catch (error) {
-            sendError(res, error);
-        }
     }
     async addToCart(req, res, next) {
         try {
@@ -146,6 +110,55 @@ class OrdersRoute {
             sendError(res, error);
         }
     }
+    async getCartProducts(req, res, next) {
+        try {
+            const $response = await OrdersService.getCartProducts(req.params.uuid);
+            sendSuccess(res, HttpStatus.OK, 2042, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async createOrder(req, res, next) {
+        try {
+            const $response = await OrdersService.createOrder(req.user, req.body);
+            sendSuccess(res, HttpStatus.OK, 2035, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async getAllOrder(req, res, next) {
+        try {
+            const $response = await OrdersService.getAllOrder(req.query);
+            sendSuccess(res, HttpStatus.OK, 2036, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async getSingleOrder(req, res, next) {
+        try {
+            const $response = await OrdersService.getSingleOrder(req.params.orderId);
+            sendSuccess(res, HttpStatus.OK, 2036, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async updateOrder(req, res, next) {
+        try {
+            const $response = await OrdersService.updateOrder(req.params.orderId, req.body);
+            sendSuccess(res, HttpStatus.OK, 2037, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+    async deleteOrder(req, res, next) {
+        try {
+            const $response = await OrdersService.deleteOrder(req.params.orderId);
+            sendSuccess(res, HttpStatus.OK, 2038, $response);
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
 
 
 

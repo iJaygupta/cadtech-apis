@@ -10,7 +10,7 @@ const convertHtmlToPdf = require('../../lib/pdfConverter').convertHtmlToPdf;
 var rimraf = require('rimraf');
 var uploader = require("./../../lib/fileHandler");
 var XLSX = require('xlsx');
-const resPerPage = process.env.RESPONSE_PER_PAGE || 4;
+const resPerPage = process.env.RESPONSE_PER_PAGE || 10;
 
 
 class EnquiryService {

@@ -129,5 +129,126 @@
         "course_category_id": [],
         "duration": "55 hours",
         "price": 12600
+    },
+    {
+        "name": "Auto Desk",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/_quantity-takeoff+logo.png?versionId=d3d527BsCIr67tsRThfwmfb95Ur.GRnS",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "Ansys",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/ansys+logo.jpg?versionId=aUqLFYmY74NrdYmVdX14Na9JffqKxQBx",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "creo.5",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/creo+logo.jpg?versionId=LfdWvfHn47pJaVs8bVD89Am3OHG1A3AJ",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "AutoDesk Inventor",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/inventor+logo.png?versionId=llbQsLq17ksghPgBobIBMzDw7p36xLCY",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "Siemens",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/nx-cad+logo.jpg?versionId=1FN.oXTFkvHcjH.o.pOi8FE4OPh375au",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+     {
+        "name": "Nx",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/NX-cam+logo.jpg?versionId=BxoPPRgPpfLv43uGXYKJ3pnc3B1cWPC7",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "PLC",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/plc+logo.png?versionId=uWlsbNiMOHBNrZg1nBnHkIwnFiMYTxLO",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "SAP",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/sap-logo.png?versionId=W76AQm1fzRtTGgSTOzrqfPulz6MP8Zqq",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "Coral Draw",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/_corel-draw-logo.png?versionId=8sRUM11alQ5FX5ZmbAlW.UlBJnVuu8wH",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "MS Office",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/microsoft-office-logo.png?versionId=OWb3DM6j5eu19VylBJM0KdcQ0.gYGJAt",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
+    },
+    {
+        "name": "Auto Desk",
+        "meta_title": "cnc",
+        "meta_description": "AC",
+        "slug": "civil",
+        "filename": "https://cadtech-container.s3.ap-south-1.amazonaws.com/inventor+logo.png",
+        "total_classes": 12,
+        "course_category_id": [],
+        "duration": "55 hours",
+        "price": 12600
     }
 ]

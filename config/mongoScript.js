@@ -1,19 +1,25 @@
 const LookUpData = require('./lookUp.json');
 const courseData = require('./course.json');
+const guideData = require('./guide.json');
 const courseCategoriesData = require('./courseCategories.json');
 const courseMapping = require('./course-mapping.json');
 const mongoose = require("mongoose");
+const teamData = require('./team.json');
 
 
 
 export function insertLookUpData(db) {
+
   db.collection('commons').deleteMany();
   db.collection('courses').deleteMany();
+  db.collection('guides').deleteMany();
   db.collection('coursecategories').deleteMany();
+  db.collection('teams').deleteMany();
   db.collection('commons').insertMany([LookUpData]);
   db.collection('coursecategories').insertMany(courseCategoriesData);
   db.collection('courses').insertMany(courseData);
-
+  db.collection('guides').insertMany(guideData);
+  db.collection('teams').insertMany(teamData);
 }
 
 

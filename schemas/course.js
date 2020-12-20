@@ -25,12 +25,12 @@ module.exports = {
     addCourse: {
         "properties": {
             "name": { "type": ["string"] },
-            "meta_title": { "type": ["string"] },
-            "meta_description": { "type": ["string"] },
             "description": { "type": ["string"] },
+            "price": { "type": ["string"] },
+            "duration": { "type": ["string"] },
             "slug": { "type": ["string"] },
-            "filename": { "type": ["string"] },
             "total_classes": { "type": ["string"] },
+            "filename": { "type": ["string"] },
             "course_category_id": { "type": ["array"] }
         },
         "additionalProperties": false,

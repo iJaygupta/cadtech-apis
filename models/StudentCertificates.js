@@ -6,6 +6,7 @@ var studentCertificatesSchema = new mongoose.Schema({
     course: { type: String },
     grade: { type: String },
     date: { type: Date },
+    dob: { type: Date },
     isActive: { type: Boolean },
 },
     {

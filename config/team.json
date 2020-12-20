@@ -1,0 +1,42 @@
+[
+    {
+        "designation":"Software Engineer",
+        "name":"Jay Gupta",
+        "bio":"Full Stack Developer",
+        "order":1,
+        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/jay.jpg?versionId=tj8jui66UZJ7ebGwk_uxOa3APqTwIslQ",
+        "is_active":true,
+        "phone_number":8808974265,
+        "social_link":{}
+    },
+    {
+        "designation":"Software Engineer",
+        "name":"Amit Sraff",
+        "bio":"Full Stack Developer",
+        "order":2,
+        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/jay.jpg?versionId=tj8jui66UZJ7ebGwk_uxOa3APqTwIslQ",
+        "is_active":true,
+        "phone_number":8808974265,
+        "social_link":{}
+    },
+    {
+        "designation":"Software Engineer",
+        "name":"Khemraj Prajapati",
+        "bio":"Full Stack Developer",
+        "order":3,
+        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/jay.jpg?versionId=tj8jui66UZJ7ebGwk_uxOa3APqTwIslQ",
+        "is_active":true,
+        "phone_number":8808974265,
+        "social_link":{}
+    },
+    {
+        "designation":"Software Engineer",
+        "name":"Diksha Garg",
+        "bio":"Full Stack Developer",
+        "order":4,
+        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/jay.jpg?versionId=tj8jui66UZJ7ebGwk_uxOa3APqTwIslQ",
+        "is_active":true,
+        "phone_number":8808974265,
+        "social_link":{}
+    }
+]

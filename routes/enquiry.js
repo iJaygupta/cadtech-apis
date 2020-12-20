@@ -21,7 +21,7 @@ class EnquiryRoute {
         this.router.get(
             '/v1/enquiry',
             security.auth.bind(this),
-            this.getEnquiry.bind(this)
+            this.getAllEnquiry.bind(this)
         );
         this.router.post(
             '/v1/enquiry/contactus',
@@ -66,7 +66,7 @@ class EnquiryRoute {
             this.uploadCsv.bind(this)
         );
         this.router.get(
-            '/v1/enquiry/certificates/data/upload',
+            '/v1/enquiry/certificates/data',
             this.getBulkData.bind(this)
         );
     }
@@ -80,9 +80,9 @@ class EnquiryRoute {
         }
     }
 
-    async getEnquiry(req, res, next) {
+    async getAllEnquiry(req, res, next) {
         try {
-            const $response = await EnquiryService.getEnquiry(req.body);
+            const $response = await EnquiryService.getAllEnquiry(req.query);
             sendSuccess(res, HttpStatus.OK, 2024, $response);
         } catch (error) {
             sendError(res, error);

@@ -1,7 +1,7 @@
 const STATUS = {
-    INACTIVE: 0,
+   // INACTIVE: 0,
     ACTIVE: 1,
-    BLOCKED: 2,
+    BLOCKED: 0,
     ACCOUNT_SELLER_NOT_APPROVED: 3,
 
     RIDER_AVAILABLE: 3,

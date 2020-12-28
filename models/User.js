@@ -89,7 +89,7 @@ const userSchema = mongoose.Schema(
             { organisation: String, role: String, from_year: Number, to_year: Number }
         ],
         roles: [{ type: String, default: ROLES.USER }],
-        status: { type: Number, default: STATUS.INACTIVE },
+        status: { type: Number, default: STATUS.ACTIVE },
         work_status: {
             type: String,
             enum: [

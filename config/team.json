@@ -11,12 +11,12 @@
     },
     {
         "designation":"Software Engineer",
-        "name":"Amit Sraff",
+        "name":"Amit Sarraf",
         "bio":"Full Stack Developer",
         "order":2,
-        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/jay.jpg?versionId=tj8jui66UZJ7ebGwk_uxOa3APqTwIslQ",
+        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/amit.jpg",
         "is_active":true,
-        "phone_number":8808974265,
+        "phone_number":8002717445,
         "social_link":{}
     },
     {
@@ -24,7 +24,7 @@
         "name":"Khemraj Prajapati",
         "bio":"Full Stack Developer",
         "order":3,
-        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/jay.jpg?versionId=tj8jui66UZJ7ebGwk_uxOa3APqTwIslQ",
+        "image":"https://cadtech-container.s3.ap-south-1.amazonaws.com/utils/Team/kemraj.jpg",
         "is_active":true,
         "phone_number":8808974265,
         "social_link":{}

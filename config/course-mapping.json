@@ -48,5 +48,33 @@
         "Auto Desk":[
             "CE",
             "Popular"
+        ],
+        "Introduction To Linux": [
+            "CSE",
+            "Trending",
+            "Popular"
+        ],
+        "geometric Dimensioning & Tolerancing": [
+            "ME",
+            "Trending"
+        ],
+        "Advanced HTML 5 & CSS ": [
+            "CSE",
+            "Popular"
+        ],
+        "MERN Stack Development": [
+            "CSE",
+            "Trending",
+            "Popular"
+        ],
+        "MEAN Stack Development": [
+            "CSE",
+            "Trending",
+            "Popular"
+        ],
+        "Introduction to AWS ": [
+            "CSE",
+            "Trending",
+            "Popular"
         ]
     }

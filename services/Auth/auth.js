@@ -44,7 +44,7 @@ class AuthService {
             }
             if (user.status === STATUS.BLOCKED) {
                 throw new APIError({
-                    message: 'You account has been blocked, please contact Admin !',
+                    message: 'Your account has been blocked, please contact Admin !',
                     status: HttpStatus.FORBIDDEN
                 });
             }
